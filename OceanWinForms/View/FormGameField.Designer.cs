@@ -35,7 +35,6 @@
             this.labelNumberOfPrey = new System.Windows.Forms.Label();
             this.groupBoxOcean = new System.Windows.Forms.GroupBox();
             this.labelGameState = new System.Windows.Forms.Label();
-            this.buttonAbort = new System.Windows.Forms.Button();
             this.groupBoxOcean.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +44,7 @@
             this.textBoxOcean.Location = new System.Drawing.Point(6, 150);
             this.textBoxOcean.Multiline = true;
             this.textBoxOcean.Name = "textBoxOcean";
-            this.textBoxOcean.Size = new System.Drawing.Size(818, 442);
+            this.textBoxOcean.Size = new System.Drawing.Size(504, 293);
             this.textBoxOcean.TabIndex = 0;
             // 
             // labelNumberOfIterations
@@ -86,7 +85,6 @@
             // 
             // groupBoxOcean
             // 
-            this.groupBoxOcean.Controls.Add(this.buttonAbort);
             this.groupBoxOcean.Controls.Add(this.labelGameState);
             this.groupBoxOcean.Controls.Add(this.textBoxOcean);
             this.groupBoxOcean.Controls.Add(this.labelNumberOfPrey);
@@ -95,7 +93,7 @@
             this.groupBoxOcean.Controls.Add(this.labelNumberOfObstacles);
             this.groupBoxOcean.Location = new System.Drawing.Point(12, 12);
             this.groupBoxOcean.Name = "groupBoxOcean";
-            this.groupBoxOcean.Size = new System.Drawing.Size(841, 660);
+            this.groupBoxOcean.Size = new System.Drawing.Size(527, 503);
             this.groupBoxOcean.TabIndex = 5;
             this.groupBoxOcean.TabStop = false;
             this.groupBoxOcean.Text = "Ocean";
@@ -103,20 +101,10 @@
             // labelGameState
             // 
             this.labelGameState.AutoSize = true;
-            this.labelGameState.Location = new System.Drawing.Point(19, 607);
+            this.labelGameState.Location = new System.Drawing.Point(19, 467);
             this.labelGameState.Name = "labelGameState";
             this.labelGameState.Size = new System.Drawing.Size(0, 20);
             this.labelGameState.TabIndex = 5;
-            // 
-            // buttonAbort
-            // 
-            this.buttonAbort.Location = new System.Drawing.Point(670, 615);
-            this.buttonAbort.Name = "buttonAbort";
-            this.buttonAbort.Size = new System.Drawing.Size(129, 29);
-            this.buttonAbort.TabIndex = 6;
-            this.buttonAbort.Text = "Abort";
-            this.buttonAbort.UseVisualStyleBackColor = true;
-            this.buttonAbort.Click += new System.EventHandler(this.buttonAbort_Click);
             // 
             // FormGameField
             // 
@@ -141,6 +129,5 @@
         public Label labelNumberOfPrey;
         public GroupBox groupBoxOcean;
         public Label labelGameState;
-        private Button buttonAbort;
     }
 }

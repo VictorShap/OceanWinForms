@@ -1,5 +1,4 @@
-﻿
-namespace OceanWinForms
+﻿namespace OceanWinForms.Util
 {
     public static class ControlExtensions
     {

@@ -56,9 +56,9 @@
             this.buttonSubmitNumberOfOceans.Name = "buttonSubmitNumberOfOceans";
             this.buttonSubmitNumberOfOceans.Size = new System.Drawing.Size(125, 29);
             this.buttonSubmitNumberOfOceans.TabIndex = 2;
-            this.buttonSubmitNumberOfOceans.Text = "Submit";
+            this.buttonSubmitNumberOfOceans.Text = "Ok";
             this.buttonSubmitNumberOfOceans.UseVisualStyleBackColor = true;
-            this.buttonSubmitNumberOfOceans.Click += new System.EventHandler(this.buttonSubmitNumberOfOceans_Click);
+            this.buttonSubmitNumberOfOceans.Click += new System.EventHandler(this.SubmitNumberOfOceans_Click);
             // 
             // FormNumberOfOceans
             // 

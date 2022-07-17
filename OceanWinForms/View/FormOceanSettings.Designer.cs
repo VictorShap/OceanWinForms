@@ -127,6 +127,7 @@
             this.textBoxTopCoordinate.Name = "textBoxTopCoordinate";
             this.textBoxTopCoordinate.Size = new System.Drawing.Size(90, 27);
             this.textBoxTopCoordinate.TabIndex = 14;
+            this.textBoxTopCoordinate.Text = "150";
             // 
             // textBoxLeftCoordinate
             // 
@@ -134,6 +135,7 @@
             this.textBoxLeftCoordinate.Name = "textBoxLeftCoordinate";
             this.textBoxLeftCoordinate.Size = new System.Drawing.Size(90, 27);
             this.textBoxLeftCoordinate.TabIndex = 13;
+            this.textBoxLeftCoordinate.Text = "300";
             // 
             // labelLeftCoorinate
             // 
@@ -161,7 +163,7 @@
             this.buttonStart.TabIndex = 16;
             this.buttonStart.Text = "Start";
             this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.buttonStart_Click);
+            this.buttonStart.Click += new System.EventHandler(this.StartOcean_Click);
             // 
             // FormOceanSettings
             // 
@@ -195,5 +197,14 @@
         private TextBox textBoxLeftCoordinate;
         private Label labelLeftCoorinate;
         private Label labelTopCoordinate;
+        private Label labelNumberOfIterations;
+        private TextBox textBoxNumberOfIterations;
+        private TextBox textBoxNumberOfObstacles;
+        private Label labelNumberOfObstacles;
+        private TextBox textBoxNumberOfPredators;
+        private Label labelNumberOfPredators;
+        private TextBox textBoxNumberOfPrey;
+        private Label labelNumberOfPrey;
+        private Button buttonStart;
     }
 }
