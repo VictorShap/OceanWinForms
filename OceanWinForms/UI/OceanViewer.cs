@@ -26,6 +26,7 @@ namespace OceanWinForms.UI
         #region Readonly
         private readonly IOceanView _ocean; // field for interacting with the ocean
         private readonly AutoResetEvent _autoResetEvent;
+        private FormGameField _gameField;
         private readonly int _topPositionForOcean;
         private readonly int _leftPositionForOcean;
         private readonly int _threadDelay;
@@ -36,7 +37,6 @@ namespace OceanWinForms.UI
         #endregion
 
         #region Fields
-        private FormGameField _gameField;
         private bool _isDone;
         #endregion
 
@@ -51,6 +51,7 @@ namespace OceanWinForms.UI
             _leftPositionForOcean = CursorDefaultLeftPosition;
             _topPositionForOcean = CursorDefaultTopPosition;
             _threadDelay = DefaultThreadDelay;
+            //_gameField = new FormGameField();
 
             _ocean = new Ocean(this);
         }
@@ -126,6 +127,19 @@ namespace OceanWinForms.UI
             Int32.TryParse(prey, out _prey);
         }
 
+        public OceanViewer(FormGameField formGameField, AutoResetEvent autoResetEvent, int topPositionForOcean, int leftPositionForOcean, string iterations, string obstacles, string predators, string prey) : this(autoResetEvent, topPositionForOcean, leftPositionForOcean)
+        {
+            _gameField = formGameField;
+            //  _gameField.Show();
+            System.Windows.Forms.Application.DoEvents();
+
+
+            Int32.TryParse(iterations, out _iterations);
+            Int32.TryParse(obstacles, out _obstacles);
+            Int32.TryParse(predators, out _predators);
+            Int32.TryParse(prey, out _prey);
+        }
+
         public OceanViewer(AutoResetEvent autoResetEvent, IOceanView ocean) : this(autoResetEvent)
         {
             _ocean = ocean;
@@ -192,6 +206,21 @@ namespace OceanWinForms.UI
             _gameField.textBoxOcean.Text = stringBuilder.ToString();
             _gameField.textBoxOcean.Resume();
         }
+
+        #region Checking for illegal thread calls
+        private void ChangeLabelGameState(Action action, Control control)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(action);
+            }
+            else
+            {
+                action();
+            }
+        }
+        #endregion
+
         #endregion
 
         #region Public Methods
@@ -209,8 +238,6 @@ namespace OceanWinForms.UI
             {
                 case GameState.Start:
 
-                    _gameField = new FormGameField();
-                    _gameField.Show();
                     _gameField.labelGameState.Text = "Starting...";
                     System.Windows.Forms.Application.DoEvents();
 

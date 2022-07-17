@@ -11,10 +11,7 @@ namespace OceanWinForms
 
         private void buttonAbort_Click(object sender, EventArgs e)
         {
-            if (true)
-            {
 
-            }
         }
     }
 }

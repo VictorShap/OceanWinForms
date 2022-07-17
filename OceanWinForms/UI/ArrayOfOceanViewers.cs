@@ -8,6 +8,10 @@ namespace OceanWinForms.UI
         private readonly IOceanLaunch[] _oceanLaunchers;
         #endregion
 
+        #region Static
+        public static FormGameField GameField;
+        #endregion
+
         #region Fields
         private bool _isDone;
         private int count;
@@ -87,7 +91,7 @@ namespace OceanWinForms.UI
             Int32.TryParse(Console.ReadLine(), out topInt);
             Int32.TryParse(Console.ReadLine(), out leftInt);
 
-            _oceanLaunchers[count - 1] = new OceanViewer(new AutoResetEvent(false), topInt, leftInt, iterations, obstacles, predators, prey);
+            _oceanLaunchers[count - 1] = new OceanViewer(GameField, new AutoResetEvent(false), topInt, leftInt, iterations, obstacles, predators, prey);
 
             Task task = _oceanLaunchers[count - 1].Launch();
             task.Start();
@@ -96,9 +100,6 @@ namespace OceanWinForms.UI
 
             if (count == _oceanLaunchers.Length)
             {
-                // Task.Run(() => Iterate());
-                //Task task1 = new Task(Iterate);
-                //task1.Start();
                 Iterate();
             }
         }

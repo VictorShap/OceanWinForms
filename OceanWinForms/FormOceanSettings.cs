@@ -28,6 +28,9 @@ namespace OceanWinForms
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
+            ArrayOfOceanViewers.GameField = new FormGameField();
+            ArrayOfOceanViewers.GameField.Show();
+
             Task.Run(() => _arrayOfOceansViewer.InitializeViewers(textBoxTopCoordinate.Text, textBoxLeftCoordinate.Text, textBoxNumberOfIterations.Text, textBoxNumberOfObstacles.Text, textBoxNumberOfPredators.Text, textBoxNumberOfPrey.Text));
         }
     }
