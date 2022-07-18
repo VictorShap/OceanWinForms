@@ -6,6 +6,7 @@ using OceanLibrary.Ocean;
 using OceanWinForms.UI.OceanViewerInterfaces;
 using OceanLibrary.Exceptions;
 using OceanWinForms.Util;
+using OceanWinForms.Controller;
 
 namespace OceanWinForms.UI
 {
@@ -19,6 +20,7 @@ namespace OceanWinForms.UI
         private readonly IOceanView _ocean; // field for interacting with the ocean
         private readonly AutoResetEvent _autoResetEvent;
         private readonly FormGameField _gameField;
+        private readonly GroupBoxOcean _groupBoxOcean;
         private readonly int _threadDelay;
         private readonly int _iterations;
         private readonly int _obstacles;
@@ -28,6 +30,7 @@ namespace OceanWinForms.UI
 
         #region Fields
         private bool _isDone;
+        private bool _wasValidationMessage;
         #endregion
 
         #region Properties
@@ -55,19 +58,32 @@ namespace OceanWinForms.UI
             _autoResetEvent = autoResetEvent;
         }
 
-        public OceanViewer(FormGameField formGameField, AutoResetEvent autoResetEvent, int topPositionForOcean, int leftPositionForOcean, string iterations, string obstacles, string predators, string prey) : this(autoResetEvent, iterations, obstacles, predators, prey)
+        private OceanViewer(FormGameField formGameField, AutoResetEvent autoResetEvent, string iterations, string obstacles, string predators, string prey) : this(autoResetEvent, iterations, obstacles, predators, prey)
         {
             _gameField = formGameField;
 
+            System.Windows.Forms.Application.DoEvents();
+        }
+
+        public OceanViewer(FormGameField formGameField, AutoResetEvent autoResetEvent, int indexNumber, int topPositionForOcean, int leftPositionForOcean, string iterations, string obstacles, string predators, string prey) : this(formGameField, autoResetEvent, iterations, obstacles, predators, prey)
+        {
+            _groupBoxOcean = new GroupBoxOcean(indexNumber);
+
             ChangeControls(
-             () =>
-             {
-                 _gameField.groupBoxOcean.Location = new Point(leftPositionForOcean, topPositionForOcean);
-             },
-           _gameField.groupBoxOcean
+                () =>
+                {
+                    _gameField.Controls.Add(_groupBoxOcean.GroupBox);
+                },
+                _gameField
                 );
 
-            System.Windows.Forms.Application.DoEvents();
+            ChangeControls(
+                () =>
+                {
+                    _groupBoxOcean.GroupBox.Location = new Point(leftPositionForOcean, topPositionForOcean);
+                },
+               _groupBoxOcean.GroupBox
+                );
         }
         #endregion
 
@@ -79,37 +95,37 @@ namespace OceanWinForms.UI
             ChangeControls(
                 () =>
                 {
-                    _gameField.labelNumberOfIterations.Text = "Iteration number: " + _ocean.CurrentIteration;
+                    _groupBoxOcean.LblNumberOfIterations.Text = "Iteration number: " + _ocean.CurrentIteration;
                 },
-              _gameField.labelNumberOfIterations);
+              _groupBoxOcean.LblNumberOfIterations);
 
             ChangeControls(
                 () =>
                 {
-                    _gameField.labelNumberOfObstacles.Text = "Obstacles: " + _ocean.NumObstacles;
+                    _groupBoxOcean.LblNumberOfObstacles.Text = "Obstacles: " + _ocean.NumObstacles;
                 },
-             _gameField.labelNumberOfObstacles);
+             _groupBoxOcean.LblNumberOfObstacles);
 
             ChangeControls(
                 () =>
                 {
-                    _gameField.labelNumberOfPredators.Text = "Predators: " + _ocean.NumPredators;
+                    _groupBoxOcean.LblNumberOfPredators.Text = "Predators: " + _ocean.NumPredators;
                 },
-              _gameField.labelNumberOfPredators);
+              _groupBoxOcean.LblNumberOfPredators);
 
             ChangeControls(
                 () =>
                 {
-                    _gameField.labelNumberOfPrey.Text = "Prey: " + _ocean.NumPrey;
+                    _groupBoxOcean.LblNumberOfPrey.Text = "Prey: " + _ocean.NumPrey;
                 },
-              _gameField.labelNumberOfPrey);
+              _groupBoxOcean.LblNumberOfPrey);
 
             ChangeControls(
                 () =>
                 {
-                    _gameField.labelGameState.Text = "Running...";
+                    _groupBoxOcean.LblGameState.Text = "Running...";
                 },
-              _gameField.labelGameState);
+              _groupBoxOcean.LblGameState);
         }
 
         private void DisplayCells()
@@ -143,35 +159,38 @@ namespace OceanWinForms.UI
             ChangeControls(
               () =>
               {
-                  _gameField.textBoxOcean.Suspend();
+                  _groupBoxOcean.TxtOcean.Suspend();
               },
-             _gameField.textBoxOcean);
+             _groupBoxOcean.TxtOcean);
 
             ChangeControls(
              () =>
              {
-                 _gameField.textBoxOcean.Text = stringBuilder.ToString();
+                 _groupBoxOcean.TxtOcean.Text = stringBuilder.ToString();
              },
-             _gameField.textBoxOcean);
+             _groupBoxOcean.TxtOcean);
 
             ChangeControls(
               () =>
               {
-                  _gameField.textBoxOcean.Resume();
+                  _groupBoxOcean.TxtOcean.Resume();
               },
-             _gameField.textBoxOcean);
+             _groupBoxOcean.TxtOcean);
         }
 
         #region Checking for illegal thread calls
         private void ChangeControls(Action action, Control control)
         {
-            if (control.InvokeRequired)
+            if (!control.IsDisposed)
             {
-                control.Invoke(action);
-            }
-            else
-            {
-                action();
+                if (control.InvokeRequired)
+                {
+                    control.Invoke(action);
+                }
+                else
+                {
+                    action();
+                }
             }
         }
         #endregion
@@ -196,9 +215,9 @@ namespace OceanWinForms.UI
                     ChangeControls(
                         () =>
                         {
-                            _gameField.labelGameState.Text = "Starting...";
+                            _groupBoxOcean.LblGameState.Text = "Starting...";
                         },
-                        _gameField.labelGameState);
+                        _groupBoxOcean.LblGameState);
 
                     System.Windows.Forms.Application.DoEvents();
 
@@ -212,9 +231,9 @@ namespace OceanWinForms.UI
                     ChangeControls(
                         () =>
                         {
-                            _gameField.labelGameState.Text = "Simulation has been ended";
+                            _groupBoxOcean.LblGameState.Text = "Simulation has been ended";
                         },
-                        _gameField.labelGameState);
+                        _groupBoxOcean.LblGameState);
 
                     System.Windows.Forms.Application.DoEvents();
 
@@ -229,13 +248,14 @@ namespace OceanWinForms.UI
 
         public void DisplayValidationMessage(bool wasFormatException)
         {
-            if (wasFormatException)
-            {
-                MessageBox.Show("Invalid input, so the it will be set its default value");
-            }
-            else
+            if (!wasFormatException && !_wasValidationMessage)
             {
                 MessageBox.Show("Invalid value, so it will be set to maximum possible value");
+                _wasValidationMessage = true;
+            }
+            else if (!_wasValidationMessage)
+            {
+                MessageBox.Show("Invalid input, so the it will be set its default value");
             }
         }
 
