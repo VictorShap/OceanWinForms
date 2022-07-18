@@ -5,9 +5,9 @@ namespace OceanWinForms.Controller
     {
         #region Consts
         private const int GroupBoxWidth = 527;
-        private const int GroupBoxHeight = 503;
-        private const int TxtOceanWidth = 504;
-        private const int TxtOceanHeight = 293;
+        private const int GroupBoxHeight = 523;
+        private const int TableLayoutPanelWidth = 504;
+        private const int TableLayoutPanelHeight = 293;
         private const int LblIterationsX = 20;
         private const int LblIterationsY = 34;
         private const int LblObstaclesX = 20;
@@ -17,15 +17,15 @@ namespace OceanWinForms.Controller
         private const int LblPreyX = 20;
         private const int LblPreyY = 117;
         private const int LblGameStateX = 20;
-        private const int LblGameStateY = 467;
-        private const int TxtOceanX = 6;
-        private const int TxtOceanY = 150;
+        private const int LblGameStateY = 487;
+        private const int TablePanelOceanX = 6;
+        private const int TablePanelOceanY = 150;
         #endregion
 
         #region Ctors
-        public GroupBoxOcean(int number)
+        public GroupBoxOcean(int number, int rows, int columns)
         {
-            GroupBox = CreateGroupBox(number);
+            GroupBox = CreateGroupBox(number, rows, columns);
         }
         #endregion
 
@@ -36,13 +36,13 @@ namespace OceanWinForms.Controller
         public Label LblNumberOfPredators { get; private set; }
         public Label LblNumberOfPrey { get; private set; }
         public Label LblGameState { get; private set; }
-        public TextBox TxtOcean { get; private set; }
+        public TableLayoutPanel TableLayoutPaneltOcean { get; private set; }
         #endregion
 
         #region Methods
 
         #region Creating controls
-        private GroupBox CreateGroupBox(int number)
+        private GroupBox CreateGroupBox(int number, int rows, int columns)
         {
             GroupBox groupBox = new GroupBox();
             groupBox.Size = new Size(GroupBoxWidth, GroupBoxHeight);
@@ -64,8 +64,8 @@ namespace OceanWinForms.Controller
             LblGameState = CreateLabel("", "labelGameState", number);
             AddControl(groupBox, LblGameState, new Point(LblGameStateX, LblGameStateY));
 
-            TxtOcean = CreateTextBox(number);
-            AddControl(groupBox, TxtOcean, new Point(TxtOceanX, TxtOceanY));
+            TableLayoutPaneltOcean = CreateTableLayoutPanel(number, rows, columns);
+            AddControl(groupBox, TableLayoutPaneltOcean, new Point(TablePanelOceanX, TablePanelOceanY));
 
             return groupBox;
         }
@@ -80,22 +80,67 @@ namespace OceanWinForms.Controller
             return label;
         }
 
-        private TextBox CreateTextBox(int number)
+        private TableLayoutPanel CreateTableLayoutPanel(int number, int rows, int columns)
         {
-            TextBox textBox = new TextBox();
-            textBox.Name = "txtOcean" + number;
-            textBox.Enabled = false;
-            textBox.Multiline = true;
-            textBox.Size = new Size(TxtOceanWidth, TxtOceanHeight);
-            textBox.Font = new Font(FontFamily.GenericMonospace, textBox.Font.Size);
+            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+            tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            tableLayoutPanel.Name = "tableLayoutPanel" + number;
+            tableLayoutPanel.ColumnCount = columns;
+            tableLayoutPanel.RowCount = rows;
+            tableLayoutPanel.Size = new Size(TableLayoutPanelWidth, TableLayoutPanelHeight);
+            tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Inset;
+            tableLayoutPanel.AutoSize = true;
+            tableLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanel.Visible = false;
 
-            return textBox;
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    tableLayoutPanel.Controls.Add(new Label() { Size = new Size(30, 30), Name = "lbl" + i + "" + j }, i, j);
+                }
+            }
+
+            AddStylesForTable(tableLayoutPanel, columns, rows);
+
+            return tableLayoutPanel;
         }
 
         private void AddControl(Control whereToAdd, Control control, Point point)
         {
             control.Location = point;
             whereToAdd.Controls.Add(control);
+        }
+
+        private void AddStylesForTable(TableLayoutPanel tableLayoutPanel, int columns, int rows)
+        {
+            TableLayoutColumnStyleCollection columnStyles = tableLayoutPanel.ColumnStyles;
+
+            foreach (ColumnStyle style in columnStyles)
+            {
+                style.SizeType = SizeType.Absolute;
+                style.Width = TableLayoutPanelWidth / columns;
+            }
+
+            TableLayoutRowStyleCollection rowStyles = tableLayoutPanel.RowStyles;
+
+            foreach (RowStyle style in rowStyles)
+            {
+                style.SizeType = SizeType.Absolute;
+                style.Height = TableLayoutPanelHeight / rows;
+            }
+        }
+        #endregion
+
+        #region Public
+        public void DisposeElementsOnTable()
+        {
+            for (int i = 0; i < TableLayoutPaneltOcean.Controls.Count; i++)
+            {
+                TableLayoutPaneltOcean.Controls[i].Dispose();
+            }
+
+            TableLayoutPaneltOcean.Controls.Clear();
         }
         #endregion
 

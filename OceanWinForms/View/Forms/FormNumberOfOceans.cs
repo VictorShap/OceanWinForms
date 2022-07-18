@@ -1,5 +1,4 @@
 ﻿using OceanWinForms.UI;
-using OceanWinForms.View;
 
 namespace OceanWinForms
 {
@@ -15,7 +14,6 @@ namespace OceanWinForms
         #region Event handlers
         private void SubmitNumberOfOceans_Click(object sender, EventArgs e)
         {
-            new Form1().Show();
             new ArrayOfOceanViewers(txtNumberOfOceans.Text).Run();
         }
         #endregion

@@ -67,7 +67,7 @@ namespace OceanWinForms.UI
 
         public OceanViewer(FormGameField formGameField, AutoResetEvent autoResetEvent, int indexNumber, int topPositionForOcean, int leftPositionForOcean, string iterations, string obstacles, string predators, string prey) : this(formGameField, autoResetEvent, iterations, obstacles, predators, prey)
         {
-            _groupBoxOcean = new GroupBoxOcean(indexNumber);
+            _groupBoxOcean = new GroupBoxOcean(indexNumber, _ocean.NumRows, _ocean.NumColumns);
 
             ChangeControls(
                 () =>
@@ -119,18 +119,16 @@ namespace OceanWinForms.UI
                     _groupBoxOcean.LblNumberOfPrey.Text = "Prey: " + _ocean.NumPrey;
                 },
               _groupBoxOcean.LblNumberOfPrey);
-
-            ChangeControls(
-                () =>
-                {
-                    _groupBoxOcean.LblGameState.Text = "Running...";
-                },
-              _groupBoxOcean.LblGameState);
         }
 
         private void DisplayCells()
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            ChangeControls(
+              () =>
+              {
+                  _groupBoxOcean.TableLayoutPaneltOcean.Suspend();
+              },
+             _groupBoxOcean.TableLayoutPaneltOcean);
 
             try
             {
@@ -140,15 +138,24 @@ namespace OceanWinForms.UI
                     {
                         if (_ocean[row, column] == null)
                         {
-                            stringBuilder.Append(Ocean.DefaultCellImage);
+                            ChangeControls(
+                            () =>
+                              {
+                                  _groupBoxOcean.TableLayoutPaneltOcean.Controls["lbl" + row + "" + column].Text = Ocean.DefaultCellImage.ToString();
+                              },
+                            _groupBoxOcean.TableLayoutPaneltOcean);
+
                         }
                         else
                         {
-                            stringBuilder.Append(_ocean[row, column].Image);
+                            ChangeControls(
+                            () =>
+                              {
+                                  _groupBoxOcean.TableLayoutPaneltOcean.Controls["lbl" + row + "" + column].Text = _ocean[row, column].Image.ToString();
+                              },
+                            _groupBoxOcean.TableLayoutPaneltOcean);
                         }
                     }
-
-                    stringBuilder.AppendLine();
                 }
             }
             catch (InvalidCoordinateException e)
@@ -156,26 +163,29 @@ namespace OceanWinForms.UI
                 MessageBox.Show(e.Message + ": \nX:" + e.X + "\n Y:" + e.Y);
             }
 
+            if (_ocean.CurrentIteration == 1)
+            {
+                ChangeControls(
+                    () =>
+                    {
+                        _groupBoxOcean.LblGameState.Text = "Running...";
+                    },
+                  _groupBoxOcean.LblGameState);
+
+                ChangeControls(
+                    () =>
+                    {
+                        _groupBoxOcean.TableLayoutPaneltOcean.Visible = true;
+                    },
+                    _groupBoxOcean.TableLayoutPaneltOcean);
+            }
+
             ChangeControls(
               () =>
               {
-                  _groupBoxOcean.TxtOcean.Suspend();
+                  _groupBoxOcean.TableLayoutPaneltOcean.Resume();
               },
-             _groupBoxOcean.TxtOcean);
-
-            ChangeControls(
-             () =>
-             {
-                 _groupBoxOcean.TxtOcean.Text = stringBuilder.ToString();
-             },
-             _groupBoxOcean.TxtOcean);
-
-            ChangeControls(
-              () =>
-              {
-                  _groupBoxOcean.TxtOcean.Resume();
-              },
-             _groupBoxOcean.TxtOcean);
+              _groupBoxOcean.TableLayoutPaneltOcean);
         }
 
         #region Checking for illegal thread calls
@@ -261,8 +271,8 @@ namespace OceanWinForms.UI
 
         public void DisplayIteration()
         {
-            DisplayStats();
             DisplayCells();
+            DisplayStats();
 
             System.Windows.Forms.Application.DoEvents();
 
