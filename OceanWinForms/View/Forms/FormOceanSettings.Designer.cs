@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormOceanSettings));
             this.lblNumberOfIterations = new System.Windows.Forms.Label();
             this.txtNumberOfIterations = new System.Windows.Forms.TextBox();
             this.txtNumberOfObstacles = new System.Windows.Forms.TextBox();
@@ -184,6 +185,7 @@
             this.Controls.Add(this.lblNumberOfObstacles);
             this.Controls.Add(this.txtNumberOfIterations);
             this.Controls.Add(this.lblNumberOfIterations);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormOceanSettings";
             this.Text = "Ocean simulation settings";
             this.ResumeLayout(false);
