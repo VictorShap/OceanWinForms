@@ -4,8 +4,11 @@ namespace OceanWinForms
 {
     public partial class FormOceanSettings : Form
     {
+        #region Readonly
         private readonly ArrayOfOceanViewers _arrayOfOceanViewers;
+        #endregion
 
+        #region Ctor
         public FormOceanSettings()
         {
             InitializeComponent();
@@ -15,12 +18,15 @@ namespace OceanWinForms
         {
             _arrayOfOceanViewers = arrayOfOceansViewer;
         }
+        #endregion
 
+        #region Event handlers
         private void StartOcean_Click(object sender, EventArgs e)
         {
-            _arrayOfOceanViewers.CreateGameField(textBoxTopCoordinate.Text, textBoxLeftCoordinate.Text, textBoxNumberOfIterations.Text, textBoxNumberOfObstacles.Text, textBoxNumberOfPredators.Text, textBoxNumberOfPrey.Text);
+            _arrayOfOceanViewers.CreateGameField(txtTopCoordinate.Text, txtLeftCoordinate.Text, txtNumberOfIterations.Text, txtNumberOfObstacles.Text, txtNumberOfPredators.Text, txtNumberOfPrey.Text);
 
             this.Close();
         }
+        #endregion
     }
 }

@@ -28,162 +28,162 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.labelNumberOfIterations = new System.Windows.Forms.Label();
-            this.textBoxNumberOfIterations = new System.Windows.Forms.TextBox();
-            this.textBoxNumberOfObstacles = new System.Windows.Forms.TextBox();
-            this.labelNumberOfObstacles = new System.Windows.Forms.Label();
-            this.textBoxNumberOfPredators = new System.Windows.Forms.TextBox();
-            this.labelNumberOfPredators = new System.Windows.Forms.Label();
-            this.textBoxNumberOfPrey = new System.Windows.Forms.TextBox();
-            this.labelNumberOfPrey = new System.Windows.Forms.Label();
-            this.labelEnterOceanCoordinates = new System.Windows.Forms.Label();
-            this.textBoxTopCoordinate = new System.Windows.Forms.TextBox();
-            this.textBoxLeftCoordinate = new System.Windows.Forms.TextBox();
-            this.labelLeftCoorinate = new System.Windows.Forms.Label();
-            this.labelTopCoordinate = new System.Windows.Forms.Label();
-            this.buttonStart = new System.Windows.Forms.Button();
+            this.lblNumberOfIterations = new System.Windows.Forms.Label();
+            this.txtNumberOfIterations = new System.Windows.Forms.TextBox();
+            this.txtNumberOfObstacles = new System.Windows.Forms.TextBox();
+            this.lblNumberOfObstacles = new System.Windows.Forms.Label();
+            this.txtNumberOfPredators = new System.Windows.Forms.TextBox();
+            this.lblNumberOfPredators = new System.Windows.Forms.Label();
+            this.txtNumberOfPrey = new System.Windows.Forms.TextBox();
+            this.lblNumberOfPrey = new System.Windows.Forms.Label();
+            this.lblEnterOceanCoordinates = new System.Windows.Forms.Label();
+            this.txtTopCoordinate = new System.Windows.Forms.TextBox();
+            this.txtLeftCoordinate = new System.Windows.Forms.TextBox();
+            this.lblLeftCoorinate = new System.Windows.Forms.Label();
+            this.lblTopCoordinate = new System.Windows.Forms.Label();
+            this.btnStart = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // labelNumberOfIterations
+            // lblNumberOfIterations
             // 
-            this.labelNumberOfIterations.AutoSize = true;
-            this.labelNumberOfIterations.Location = new System.Drawing.Point(29, 118);
-            this.labelNumberOfIterations.Name = "labelNumberOfIterations";
-            this.labelNumberOfIterations.Size = new System.Drawing.Size(210, 20);
-            this.labelNumberOfIterations.TabIndex = 0;
-            this.labelNumberOfIterations.Text = "Enter the number of iterations:";
+            this.lblNumberOfIterations.AutoSize = true;
+            this.lblNumberOfIterations.Location = new System.Drawing.Point(29, 118);
+            this.lblNumberOfIterations.Name = "lblNumberOfIterations";
+            this.lblNumberOfIterations.Size = new System.Drawing.Size(210, 20);
+            this.lblNumberOfIterations.TabIndex = 0;
+            this.lblNumberOfIterations.Text = "Enter the number of iterations:";
             // 
-            // textBoxNumberOfIterations
+            // txtNumberOfIterations
             // 
-            this.textBoxNumberOfIterations.Location = new System.Drawing.Point(261, 115);
-            this.textBoxNumberOfIterations.Name = "textBoxNumberOfIterations";
-            this.textBoxNumberOfIterations.Size = new System.Drawing.Size(122, 27);
-            this.textBoxNumberOfIterations.TabIndex = 1;
-            this.textBoxNumberOfIterations.Text = "1000";
+            this.txtNumberOfIterations.Location = new System.Drawing.Point(261, 115);
+            this.txtNumberOfIterations.Name = "txtNumberOfIterations";
+            this.txtNumberOfIterations.Size = new System.Drawing.Size(122, 27);
+            this.txtNumberOfIterations.TabIndex = 1;
+            this.txtNumberOfIterations.Text = "1000";
             // 
-            // textBoxNumberOfObstacles
+            // txtNumberOfObstacles
             // 
-            this.textBoxNumberOfObstacles.Location = new System.Drawing.Point(261, 153);
-            this.textBoxNumberOfObstacles.Name = "textBoxNumberOfObstacles";
-            this.textBoxNumberOfObstacles.Size = new System.Drawing.Size(122, 27);
-            this.textBoxNumberOfObstacles.TabIndex = 3;
-            this.textBoxNumberOfObstacles.Text = "75";
+            this.txtNumberOfObstacles.Location = new System.Drawing.Point(261, 153);
+            this.txtNumberOfObstacles.Name = "txtNumberOfObstacles";
+            this.txtNumberOfObstacles.Size = new System.Drawing.Size(122, 27);
+            this.txtNumberOfObstacles.TabIndex = 3;
+            this.txtNumberOfObstacles.Text = "75";
             // 
-            // labelNumberOfObstacles
+            // lblNumberOfObstacles
             // 
-            this.labelNumberOfObstacles.AutoSize = true;
-            this.labelNumberOfObstacles.Location = new System.Drawing.Point(29, 156);
-            this.labelNumberOfObstacles.Name = "labelNumberOfObstacles";
-            this.labelNumberOfObstacles.Size = new System.Drawing.Size(210, 20);
-            this.labelNumberOfObstacles.TabIndex = 2;
-            this.labelNumberOfObstacles.Text = "Enter the number of obstacles:";
+            this.lblNumberOfObstacles.AutoSize = true;
+            this.lblNumberOfObstacles.Location = new System.Drawing.Point(29, 156);
+            this.lblNumberOfObstacles.Name = "lblNumberOfObstacles";
+            this.lblNumberOfObstacles.Size = new System.Drawing.Size(210, 20);
+            this.lblNumberOfObstacles.TabIndex = 2;
+            this.lblNumberOfObstacles.Text = "Enter the number of obstacles:";
             // 
-            // textBoxNumberOfPredators
+            // txtNumberOfPredators
             // 
-            this.textBoxNumberOfPredators.Location = new System.Drawing.Point(261, 191);
-            this.textBoxNumberOfPredators.Name = "textBoxNumberOfPredators";
-            this.textBoxNumberOfPredators.Size = new System.Drawing.Size(122, 27);
-            this.textBoxNumberOfPredators.TabIndex = 5;
-            this.textBoxNumberOfPredators.Text = "20";
+            this.txtNumberOfPredators.Location = new System.Drawing.Point(261, 191);
+            this.txtNumberOfPredators.Name = "txtNumberOfPredators";
+            this.txtNumberOfPredators.Size = new System.Drawing.Size(122, 27);
+            this.txtNumberOfPredators.TabIndex = 5;
+            this.txtNumberOfPredators.Text = "20";
             // 
-            // labelNumberOfPredators
+            // lblNumberOfPredators
             // 
-            this.labelNumberOfPredators.AutoSize = true;
-            this.labelNumberOfPredators.Location = new System.Drawing.Point(29, 194);
-            this.labelNumberOfPredators.Name = "labelNumberOfPredators";
-            this.labelNumberOfPredators.Size = new System.Drawing.Size(212, 20);
-            this.labelNumberOfPredators.TabIndex = 4;
-            this.labelNumberOfPredators.Text = "Enter the number of predators:";
+            this.lblNumberOfPredators.AutoSize = true;
+            this.lblNumberOfPredators.Location = new System.Drawing.Point(29, 194);
+            this.lblNumberOfPredators.Name = "lblNumberOfPredators";
+            this.lblNumberOfPredators.Size = new System.Drawing.Size(212, 20);
+            this.lblNumberOfPredators.TabIndex = 4;
+            this.lblNumberOfPredators.Text = "Enter the number of predators:";
             // 
-            // textBoxNumberOfPrey
+            // txtNumberOfPrey
             // 
-            this.textBoxNumberOfPrey.Location = new System.Drawing.Point(261, 228);
-            this.textBoxNumberOfPrey.Name = "textBoxNumberOfPrey";
-            this.textBoxNumberOfPrey.Size = new System.Drawing.Size(122, 27);
-            this.textBoxNumberOfPrey.TabIndex = 7;
-            this.textBoxNumberOfPrey.Text = "150";
+            this.txtNumberOfPrey.Location = new System.Drawing.Point(261, 228);
+            this.txtNumberOfPrey.Name = "txtNumberOfPrey";
+            this.txtNumberOfPrey.Size = new System.Drawing.Size(122, 27);
+            this.txtNumberOfPrey.TabIndex = 7;
+            this.txtNumberOfPrey.Text = "150";
             // 
-            // labelNumberOfPrey
+            // lblNumberOfPrey
             // 
-            this.labelNumberOfPrey.AutoSize = true;
-            this.labelNumberOfPrey.Location = new System.Drawing.Point(29, 231);
-            this.labelNumberOfPrey.Name = "labelNumberOfPrey";
-            this.labelNumberOfPrey.Size = new System.Drawing.Size(177, 20);
-            this.labelNumberOfPrey.TabIndex = 6;
-            this.labelNumberOfPrey.Text = "Enter the number of prey:";
+            this.lblNumberOfPrey.AutoSize = true;
+            this.lblNumberOfPrey.Location = new System.Drawing.Point(29, 231);
+            this.lblNumberOfPrey.Name = "lblNumberOfPrey";
+            this.lblNumberOfPrey.Size = new System.Drawing.Size(177, 20);
+            this.lblNumberOfPrey.TabIndex = 6;
+            this.lblNumberOfPrey.Text = "Enter the number of prey:";
             // 
-            // labelEnterOceanCoordinates
+            // lblEnterOceanCoordinates
             // 
-            this.labelEnterOceanCoordinates.AutoSize = true;
-            this.labelEnterOceanCoordinates.Location = new System.Drawing.Point(12, 9);
-            this.labelEnterOceanCoordinates.Name = "labelEnterOceanCoordinates";
-            this.labelEnterOceanCoordinates.Size = new System.Drawing.Size(379, 20);
-            this.labelEnterOceanCoordinates.TabIndex = 10;
-            this.labelEnterOceanCoordinates.Text = "Enter the coordinates you want to position the ocean at:";
+            this.lblEnterOceanCoordinates.AutoSize = true;
+            this.lblEnterOceanCoordinates.Location = new System.Drawing.Point(12, 9);
+            this.lblEnterOceanCoordinates.Name = "lblEnterOceanCoordinates";
+            this.lblEnterOceanCoordinates.Size = new System.Drawing.Size(379, 20);
+            this.lblEnterOceanCoordinates.TabIndex = 10;
+            this.lblEnterOceanCoordinates.Text = "Enter the coordinates you want to position the ocean at:";
             // 
-            // textBoxTopCoordinate
+            // txtTopCoordinate
             // 
-            this.textBoxTopCoordinate.Location = new System.Drawing.Point(293, 49);
-            this.textBoxTopCoordinate.Name = "textBoxTopCoordinate";
-            this.textBoxTopCoordinate.Size = new System.Drawing.Size(90, 27);
-            this.textBoxTopCoordinate.TabIndex = 14;
-            this.textBoxTopCoordinate.Text = "150";
+            this.txtTopCoordinate.Location = new System.Drawing.Point(283, 49);
+            this.txtTopCoordinate.Name = "txtTopCoordinate";
+            this.txtTopCoordinate.Size = new System.Drawing.Size(93, 27);
+            this.txtTopCoordinate.TabIndex = 14;
+            this.txtTopCoordinate.Text = "150";
             // 
-            // textBoxLeftCoordinate
+            // txtLeftCoordinate
             // 
-            this.textBoxLeftCoordinate.Location = new System.Drawing.Point(85, 49);
-            this.textBoxLeftCoordinate.Name = "textBoxLeftCoordinate";
-            this.textBoxLeftCoordinate.Size = new System.Drawing.Size(90, 27);
-            this.textBoxLeftCoordinate.TabIndex = 13;
-            this.textBoxLeftCoordinate.Text = "300";
+            this.txtLeftCoordinate.Location = new System.Drawing.Point(85, 49);
+            this.txtLeftCoordinate.Name = "txtLeftCoordinate";
+            this.txtLeftCoordinate.Size = new System.Drawing.Size(90, 27);
+            this.txtLeftCoordinate.TabIndex = 13;
+            this.txtLeftCoordinate.Text = "300";
             // 
-            // labelLeftCoorinate
+            // lblLeftCoorinate
             // 
-            this.labelLeftCoorinate.AutoSize = true;
-            this.labelLeftCoorinate.Location = new System.Drawing.Point(29, 52);
-            this.labelLeftCoorinate.Name = "labelLeftCoorinate";
-            this.labelLeftCoorinate.Size = new System.Drawing.Size(41, 20);
-            this.labelLeftCoorinate.TabIndex = 12;
-            this.labelLeftCoorinate.Text = "Left: ";
+            this.lblLeftCoorinate.AutoSize = true;
+            this.lblLeftCoorinate.Location = new System.Drawing.Point(29, 52);
+            this.lblLeftCoorinate.Name = "lblLeftCoorinate";
+            this.lblLeftCoorinate.Size = new System.Drawing.Size(41, 20);
+            this.lblLeftCoorinate.TabIndex = 12;
+            this.lblLeftCoorinate.Text = "Left: ";
             // 
-            // labelTopCoordinate
+            // lblTopCoordinate
             // 
-            this.labelTopCoordinate.AutoSize = true;
-            this.labelTopCoordinate.Location = new System.Drawing.Point(233, 52);
-            this.labelTopCoordinate.Name = "labelTopCoordinate";
-            this.labelTopCoordinate.Size = new System.Drawing.Size(41, 20);
-            this.labelTopCoordinate.TabIndex = 15;
-            this.labelTopCoordinate.Text = "Top: ";
+            this.lblTopCoordinate.AutoSize = true;
+            this.lblTopCoordinate.Location = new System.Drawing.Point(209, 52);
+            this.lblTopCoordinate.Name = "lblTopCoordinate";
+            this.lblTopCoordinate.Size = new System.Drawing.Size(41, 20);
+            this.lblTopCoordinate.TabIndex = 15;
+            this.lblTopCoordinate.Text = "Top: ";
             // 
-            // buttonStart
+            // btnStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(261, 271);
-            this.buttonStart.Name = "buttonStart";
-            this.buttonStart.Size = new System.Drawing.Size(122, 29);
-            this.buttonStart.TabIndex = 16;
-            this.buttonStart.Text = "Start";
-            this.buttonStart.UseVisualStyleBackColor = true;
-            this.buttonStart.Click += new System.EventHandler(this.StartOcean_Click);
+            this.btnStart.Location = new System.Drawing.Point(261, 271);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(122, 29);
+            this.btnStart.TabIndex = 16;
+            this.btnStart.Text = "Start";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.StartOcean_Click);
             // 
             // FormOceanSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(405, 311);
-            this.Controls.Add(this.buttonStart);
-            this.Controls.Add(this.labelTopCoordinate);
-            this.Controls.Add(this.textBoxTopCoordinate);
-            this.Controls.Add(this.textBoxLeftCoordinate);
-            this.Controls.Add(this.labelLeftCoorinate);
-            this.Controls.Add(this.labelEnterOceanCoordinates);
-            this.Controls.Add(this.textBoxNumberOfPrey);
-            this.Controls.Add(this.labelNumberOfPrey);
-            this.Controls.Add(this.textBoxNumberOfPredators);
-            this.Controls.Add(this.labelNumberOfPredators);
-            this.Controls.Add(this.textBoxNumberOfObstacles);
-            this.Controls.Add(this.labelNumberOfObstacles);
-            this.Controls.Add(this.textBoxNumberOfIterations);
-            this.Controls.Add(this.labelNumberOfIterations);
+            this.Controls.Add(this.btnStart);
+            this.Controls.Add(this.lblTopCoordinate);
+            this.Controls.Add(this.txtTopCoordinate);
+            this.Controls.Add(this.txtLeftCoordinate);
+            this.Controls.Add(this.lblLeftCoorinate);
+            this.Controls.Add(this.lblEnterOceanCoordinates);
+            this.Controls.Add(this.txtNumberOfPrey);
+            this.Controls.Add(this.lblNumberOfPrey);
+            this.Controls.Add(this.txtNumberOfPredators);
+            this.Controls.Add(this.lblNumberOfPredators);
+            this.Controls.Add(this.txtNumberOfObstacles);
+            this.Controls.Add(this.lblNumberOfObstacles);
+            this.Controls.Add(this.txtNumberOfIterations);
+            this.Controls.Add(this.lblNumberOfIterations);
             this.Name = "FormOceanSettings";
             this.Text = "Ocean simulation settings";
             this.ResumeLayout(false);
@@ -192,19 +192,19 @@
         }
 
         #endregion
-        private Label labelEnterOceanCoordinates;
-        private TextBox textBoxTopCoordinate;
-        private TextBox textBoxLeftCoordinate;
-        private Label labelLeftCoorinate;
-        private Label labelTopCoordinate;
-        private Label labelNumberOfIterations;
-        private TextBox textBoxNumberOfIterations;
-        private TextBox textBoxNumberOfObstacles;
-        private Label labelNumberOfObstacles;
-        private TextBox textBoxNumberOfPredators;
-        private Label labelNumberOfPredators;
-        private TextBox textBoxNumberOfPrey;
-        private Label labelNumberOfPrey;
-        private Button buttonStart;
+        private Label lblEnterOceanCoordinates;
+        private TextBox txtTopCoordinate;
+        private TextBox txtLeftCoordinate;
+        private Label lblLeftCoorinate;
+        private Label lblTopCoordinate;
+        private Label lblNumberOfIterations;
+        private TextBox txtNumberOfIterations;
+        private TextBox txtNumberOfObstacles;
+        private Label lblNumberOfObstacles;
+        private TextBox txtNumberOfPredators;
+        private Label lblNumberOfPredators;
+        private TextBox txtNumberOfPrey;
+        private Label lblNumberOfPrey;
+        private Button btnStart;
     }
 }

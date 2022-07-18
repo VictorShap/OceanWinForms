@@ -3,10 +3,11 @@ namespace OceanWinForms
 {
     public partial class FormGameField : Form
     {
+        #region Ctor
         public FormGameField()
         {
             InitializeComponent();
-            textBoxOcean.Font = new Font(FontFamily.GenericMonospace, textBoxOcean.Font.Size);
         }
+        #endregion
     }
 }

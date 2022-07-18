@@ -9,9 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="OceanLibrary">
-      <HintPath>..\..\OceanLibraryForWinForms\OceanLibrary\bin\Debug\net6.0\OceanLibrary.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\OceanLibraryForWinForms\OceanLibrary\OceanLibrary.csproj" />
   </ItemGroup>
 
 </Project>

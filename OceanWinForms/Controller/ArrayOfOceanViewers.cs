@@ -6,6 +6,7 @@ namespace OceanWinForms.UI
     {
         #region Readonly
         private readonly IOceanLaunch[] _oceanViewers;
+        private readonly FormGameField _gameField;
         #endregion
 
         #region Fields
@@ -13,22 +14,18 @@ namespace OceanWinForms.UI
         private int count;
         #endregion
 
-        #region Propeties
-        public FormGameField GameField { get; set; }
-        #endregion
-
         #region Ctors
-        public ArrayOfOceanViewers()
+        private ArrayOfOceanViewers()
         {
-            new FormNumberOfOceans().Show();
+            _gameField = new FormGameField();
         }
 
-        public ArrayOfOceanViewers(int length)
+        public ArrayOfOceanViewers(int length) : this()
         {
             _oceanViewers = new IOceanLaunch[length];
         }
 
-        public ArrayOfOceanViewers(string length)
+        public ArrayOfOceanViewers(string length) : this()
         {
             int number;
             Int32.TryParse(length, out number);
@@ -36,7 +33,7 @@ namespace OceanWinForms.UI
             _oceanViewers = new IOceanLaunch[number];
         }
 
-        public ArrayOfOceanViewers(IOceanLaunch[] oceanLaunchers)
+        public ArrayOfOceanViewers(IOceanLaunch[] oceanLaunchers) : this()
         {
             _oceanViewers = oceanLaunchers;
         }
@@ -84,7 +81,7 @@ namespace OceanWinForms.UI
             Int32.TryParse(top, out topInt);
             Int32.TryParse(left, out leftInt);
 
-            _oceanViewers[count - 1] = new OceanViewer(GameField, new AutoResetEvent(false), topInt, leftInt, iterations, obstacles, predators, prey);
+            _oceanViewers[count - 1] = new OceanViewer(_gameField, new AutoResetEvent(false), count, topInt, leftInt, iterations, obstacles, predators, prey);
 
             Task task = _oceanViewers[count - 1].Launch();
             task.Start();
@@ -109,8 +106,7 @@ namespace OceanWinForms.UI
 
         public void CreateGameField(string topCoordinate, string leftCoordinate, string iterations, string obstacles, string predators, string prey)
         {
-            this.GameField = new FormGameField();
-            this.GameField.Show();
+            this._gameField.Show();
 
             Task.Run(() => this.InitializeViewers(topCoordinate, leftCoordinate, iterations, obstacles, predators, prey));
         }
