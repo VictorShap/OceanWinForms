@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNumberOfOceans));
             this.lblNumberOfOceans = new System.Windows.Forms.Label();
             this.txtNumberOfOceans = new System.Windows.Forms.TextBox();
             this.btnSubmitNumberOfOceans = new System.Windows.Forms.Button();
@@ -68,6 +69,7 @@
             this.Controls.Add(this.btnSubmitNumberOfOceans);
             this.Controls.Add(this.txtNumberOfOceans);
             this.Controls.Add(this.lblNumberOfOceans);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormNumberOfOceans";
             this.Text = "Number of oceans";
             this.ResumeLayout(false);

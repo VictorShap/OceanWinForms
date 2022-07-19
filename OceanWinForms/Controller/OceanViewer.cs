@@ -1,12 +1,11 @@
-﻿using System.Text;
-using OceanLibrary.UI.IOceanInterfaces;
+﻿using OceanLibrary.UI.IOceanInterfaces;
 using OceanLibrary.Ocean.UI.Enums;
 using OceanLibrary.Ocean.OceanInterfaces;
 using OceanLibrary.Ocean;
 using OceanWinForms.UI.OceanViewerInterfaces;
 using OceanLibrary.Exceptions;
 using OceanWinForms.Util;
-using OceanWinForms.Controller;
+using OceanWinForms.CustomControls;
 
 namespace OceanWinForms.UI
 {
@@ -67,7 +66,7 @@ namespace OceanWinForms.UI
 
         public OceanViewer(FormGameField formGameField, AutoResetEvent autoResetEvent, int indexNumber, int topPositionForOcean, int leftPositionForOcean, string iterations, string obstacles, string predators, string prey) : this(formGameField, autoResetEvent, iterations, obstacles, predators, prey)
         {
-            _groupBoxOcean = new GroupBoxOcean(indexNumber);
+            _groupBoxOcean = new GroupBoxOcean(indexNumber, _ocean.NumRows, _ocean.NumColumns);
 
             ChangeControls(
                 () =>
@@ -119,18 +118,16 @@ namespace OceanWinForms.UI
                     _groupBoxOcean.LblNumberOfPrey.Text = "Prey: " + _ocean.NumPrey;
                 },
               _groupBoxOcean.LblNumberOfPrey);
-
-            ChangeControls(
-                () =>
-                {
-                    _groupBoxOcean.LblGameState.Text = "Running...";
-                },
-              _groupBoxOcean.LblGameState);
         }
 
         private void DisplayCells()
         {
-            StringBuilder stringBuilder = new StringBuilder();
+            ChangeControls(
+              () =>
+              {
+                  _groupBoxOcean.TableLayoutPaneltOcean.Suspend();
+              },
+             _groupBoxOcean.TableLayoutPaneltOcean);
 
             try
             {
@@ -138,59 +135,106 @@ namespace OceanWinForms.UI
                 {
                     for (int column = 0; column < _ocean.NumColumns; column++)
                     {
+                        PictureBox pb = _groupBoxOcean.TableLayoutPaneltOcean.Controls["pb" + row + "" + column] as PictureBox;
+
                         if (_ocean[row, column] == null)
                         {
-                            stringBuilder.Append(Ocean.DefaultCellImage);
+                            ChangeControls(
+                            () =>
+                              {
+                                  pb.Image = ArrayOfOceanViewers.BitmapEmpty;
+                              },
+                            _groupBoxOcean.TableLayoutPaneltOcean);
+
                         }
                         else
                         {
-                            stringBuilder.Append(_ocean[row, column].Image);
+                            ChangeControls(
+                            () =>
+                              {
+                                  pb.Image = GetImage(_ocean[row, column]);
+                              },
+                            _groupBoxOcean.TableLayoutPaneltOcean);
                         }
                     }
-
-                    stringBuilder.AppendLine();
                 }
             }
             catch (InvalidCoordinateException e)
             {
-                MessageBox.Show(e.Message + ": \nX:" + e.X + "\n Y:" + e.Y);
+                MessageBox.Show(e.Message + ": \nX:" + e.X + "\nY:" + e.Y);
+            }
+            catch (ObjectDisposedException e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            if (_ocean.CurrentIteration == 1)
+            {
+                ChangeControls(
+                    () =>
+                    {
+                        _groupBoxOcean.LblGameState.Text = "Running...";
+                    },
+                  _groupBoxOcean.LblGameState);
+
+                ChangeControls(
+                    () =>
+                    {
+                        _groupBoxOcean.TableLayoutPaneltOcean.Visible = true;
+                    },
+                    _groupBoxOcean.TableLayoutPaneltOcean);
             }
 
             ChangeControls(
               () =>
               {
-                  _groupBoxOcean.TxtOcean.Suspend();
+                  _groupBoxOcean.TableLayoutPaneltOcean.Resume();
               },
-             _groupBoxOcean.TxtOcean);
+              _groupBoxOcean.TableLayoutPaneltOcean);
+        }
 
-            ChangeControls(
-             () =>
-             {
-                 _groupBoxOcean.TxtOcean.Text = stringBuilder.ToString();
-             },
-             _groupBoxOcean.TxtOcean);
+        private Bitmap GetImage(OceanLibrary.Ocean.CellTypes.Cell cell)
+        {
+            switch (cell.CellType)
+            {
+                case OceanLibrary.Ocean.CellTypes.Enums.CellType.Obstacle:
 
-            ChangeControls(
-              () =>
-              {
-                  _groupBoxOcean.TxtOcean.Resume();
-              },
-             _groupBoxOcean.TxtOcean);
+                    return ArrayOfOceanViewers.BitmapObstacle;
+
+                case OceanLibrary.Ocean.CellTypes.Enums.CellType.Predator:
+
+                    return ArrayOfOceanViewers.BitmapPredator;
+
+                case OceanLibrary.Ocean.CellTypes.Enums.CellType.Prey:
+
+                    return ArrayOfOceanViewers.BitmapPrey;
+
+                default:
+
+                    return ArrayOfOceanViewers.BitmapEmpty;
+            }
         }
 
         #region Checking for illegal thread calls
         private void ChangeControls(Action action, Control control)
         {
-            if (!control.IsDisposed)
+            try
             {
-                if (control.InvokeRequired)
+                if (!control.IsDisposed)
                 {
-                    control.Invoke(action);
+                    if (control.InvokeRequired)
+                    {
+                        control.Invoke(action);
+                    }
+                    else
+                    {
+                        action();
+                    }
                 }
-                else
-                {
-                    action();
-                }
+            }
+            catch
+            {
+                throw;
             }
         }
         #endregion
@@ -261,8 +305,8 @@ namespace OceanWinForms.UI
 
         public void DisplayIteration()
         {
-            DisplayStats();
             DisplayCells();
+            DisplayStats();
 
             System.Windows.Forms.Application.DoEvents();
 
