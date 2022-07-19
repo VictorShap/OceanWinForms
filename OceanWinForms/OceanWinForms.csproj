@@ -7,7 +7,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageIcon></PackageIcon>
-    <ApplicationIcon>View\Icon\under-ocean-peace-2021-08-31-07.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Icon\under-ocean-peace-2021-08-31-07.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>

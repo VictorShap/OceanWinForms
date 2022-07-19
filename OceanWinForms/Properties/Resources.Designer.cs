@@ -63,9 +63,39 @@ namespace OceanWinForms.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap _42699_water_wave_icon {
+        internal static System.Drawing.Bitmap empty {
             get {
-                object obj = ResourceManager.GetObject("42699-water-wave-icon", resourceCulture);
+                object obj = ResourceManager.GetObject("empty", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap obstacle {
+            get {
+                object obj = ResourceManager.GetObject("obstacle", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap predator_ico {
+            get {
+                object obj = ResourceManager.GetObject("predator.ico", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap prey_ico {
+            get {
+                object obj = ResourceManager.GetObject("prey.ico", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

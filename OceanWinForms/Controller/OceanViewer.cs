@@ -1,12 +1,11 @@
-﻿using System.Text;
-using OceanLibrary.UI.IOceanInterfaces;
+﻿using OceanLibrary.UI.IOceanInterfaces;
 using OceanLibrary.Ocean.UI.Enums;
 using OceanLibrary.Ocean.OceanInterfaces;
 using OceanLibrary.Ocean;
 using OceanWinForms.UI.OceanViewerInterfaces;
 using OceanLibrary.Exceptions;
 using OceanWinForms.Util;
-using OceanWinForms.Controller;
+using OceanWinForms.CustomControls;
 
 namespace OceanWinForms.UI
 {
@@ -136,12 +135,14 @@ namespace OceanWinForms.UI
                 {
                     for (int column = 0; column < _ocean.NumColumns; column++)
                     {
+                        PictureBox pb = _groupBoxOcean.TableLayoutPaneltOcean.Controls["pb" + row + "" + column] as PictureBox;
+
                         if (_ocean[row, column] == null)
                         {
                             ChangeControls(
                             () =>
                               {
-                                  _groupBoxOcean.TableLayoutPaneltOcean.Controls["lbl" + row + "" + column].Text = Ocean.DefaultCellImage.ToString();
+                                  pb.Image = ArrayOfOceanViewers.BitmapEmpty;
                               },
                             _groupBoxOcean.TableLayoutPaneltOcean);
 
@@ -151,7 +152,7 @@ namespace OceanWinForms.UI
                             ChangeControls(
                             () =>
                               {
-                                  _groupBoxOcean.TableLayoutPaneltOcean.Controls["lbl" + row + "" + column].Text = _ocean[row, column].Image.ToString();
+                                  pb.Image = GetImage(_ocean[row, column]);
                               },
                             _groupBoxOcean.TableLayoutPaneltOcean);
                         }
@@ -160,7 +161,11 @@ namespace OceanWinForms.UI
             }
             catch (InvalidCoordinateException e)
             {
-                MessageBox.Show(e.Message + ": \nX:" + e.X + "\n Y:" + e.Y);
+                MessageBox.Show(e.Message + ": \nX:" + e.X + "\nY:" + e.Y);
+            }
+            catch (ObjectDisposedException e)
+            {
+                MessageBox.Show(e.Message);
             }
 
             if (_ocean.CurrentIteration == 1)
@@ -188,19 +193,48 @@ namespace OceanWinForms.UI
               _groupBoxOcean.TableLayoutPaneltOcean);
         }
 
+        private Bitmap GetImage(OceanLibrary.Ocean.CellTypes.Cell cell)
+        {
+            switch (cell.CellType)
+            {
+                case OceanLibrary.Ocean.CellTypes.Enums.CellType.Obstacle:
+
+                    return ArrayOfOceanViewers.BitmapObstacle;
+
+                case OceanLibrary.Ocean.CellTypes.Enums.CellType.Predator:
+
+                    return ArrayOfOceanViewers.BitmapPredator;
+
+                case OceanLibrary.Ocean.CellTypes.Enums.CellType.Prey:
+
+                    return ArrayOfOceanViewers.BitmapPrey;
+
+                default:
+
+                    return ArrayOfOceanViewers.BitmapEmpty;
+            }
+        }
+
         #region Checking for illegal thread calls
         private void ChangeControls(Action action, Control control)
         {
-            if (!control.IsDisposed)
+            try
             {
-                if (control.InvokeRequired)
+                if (!control.IsDisposed)
                 {
-                    control.Invoke(action);
+                    if (control.InvokeRequired)
+                    {
+                        control.Invoke(action);
+                    }
+                    else
+                    {
+                        action();
+                    }
                 }
-                else
-                {
-                    action();
-                }
+            }
+            catch
+            {
+                throw;
             }
         }
         #endregion

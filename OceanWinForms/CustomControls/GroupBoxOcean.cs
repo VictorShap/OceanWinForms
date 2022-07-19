@@ -1,13 +1,12 @@
-﻿
-namespace OceanWinForms.Controller
+﻿namespace OceanWinForms.CustomControls
 {
-    internal class GroupBoxOcean
+    internal class GroupBoxOcean : Control
     {
         #region Consts
         private const int GroupBoxWidth = 527;
-        private const int GroupBoxHeight = 523;
-        private const int TableLayoutPanelWidth = 504;
-        private const int TableLayoutPanelHeight = 293;
+        private const int GroupBoxHeight = 640;
+        private const int TableLayoutPanelWidth = 520;
+        private const int TableLayoutPanelHeight = 333;
         private const int LblIterationsX = 20;
         private const int LblIterationsY = 34;
         private const int LblObstaclesX = 20;
@@ -17,7 +16,7 @@ namespace OceanWinForms.Controller
         private const int LblPreyX = 20;
         private const int LblPreyY = 117;
         private const int LblGameStateX = 20;
-        private const int LblGameStateY = 487;
+        private const int LblGameStateY = 590;
         private const int TablePanelOceanX = 6;
         private const int TablePanelOceanY = 150;
         #endregion
@@ -36,7 +35,7 @@ namespace OceanWinForms.Controller
         public Label LblNumberOfPredators { get; private set; }
         public Label LblNumberOfPrey { get; private set; }
         public Label LblGameState { get; private set; }
-        public TableLayoutPanel TableLayoutPaneltOcean { get; private set; }
+        public TableLayoutPanelDoubleBuff TableLayoutPaneltOcean { get; private set; }
         #endregion
 
         #region Methods
@@ -80,9 +79,9 @@ namespace OceanWinForms.Controller
             return label;
         }
 
-        private TableLayoutPanel CreateTableLayoutPanel(int number, int rows, int columns)
+        private TableLayoutPanelDoubleBuff CreateTableLayoutPanel(int number, int rows, int columns)
         {
-            TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+            TableLayoutPanelDoubleBuff tableLayoutPanel = new TableLayoutPanelDoubleBuff();
             tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
             tableLayoutPanel.Name = "tableLayoutPanel" + number;
             tableLayoutPanel.ColumnCount = columns;
@@ -97,11 +96,9 @@ namespace OceanWinForms.Controller
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    tableLayoutPanel.Controls.Add(new Label() { Size = new Size(30, 30), Name = "lbl" + i + "" + j }, i, j);
+                    tableLayoutPanel.Controls.Add(new PictureBox() { Size = new Size(30, 30), Name = "pb" + i + "" + j, SizeMode = PictureBoxSizeMode.Zoom }, i, j);
                 }
             }
-
-            AddStylesForTable(tableLayoutPanel, columns, rows);
 
             return tableLayoutPanel;
         }
@@ -110,25 +107,6 @@ namespace OceanWinForms.Controller
         {
             control.Location = point;
             whereToAdd.Controls.Add(control);
-        }
-
-        private void AddStylesForTable(TableLayoutPanel tableLayoutPanel, int columns, int rows)
-        {
-            TableLayoutColumnStyleCollection columnStyles = tableLayoutPanel.ColumnStyles;
-
-            foreach (ColumnStyle style in columnStyles)
-            {
-                style.SizeType = SizeType.Absolute;
-                style.Width = TableLayoutPanelWidth / columns;
-            }
-
-            TableLayoutRowStyleCollection rowStyles = tableLayoutPanel.RowStyles;
-
-            foreach (RowStyle style in rowStyles)
-            {
-                style.SizeType = SizeType.Absolute;
-                style.Height = TableLayoutPanelHeight / rows;
-            }
         }
         #endregion
 

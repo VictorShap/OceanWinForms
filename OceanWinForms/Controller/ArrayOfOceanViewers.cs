@@ -9,12 +9,28 @@ namespace OceanWinForms.UI
         private readonly FormGameField _gameField;
         #endregion
 
+        #region Static
+        public static Bitmap BitmapEmpty;
+        public static Bitmap BitmapObstacle;
+        public static Bitmap BitmapPredator;
+        public static Bitmap BitmapPrey;
+        #endregion
+
         #region Fields
         private bool _isDone;
         private int count;
         #endregion
 
         #region Ctors
+        static ArrayOfOceanViewers()
+        {
+
+            BitmapEmpty = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\empty.jpg");
+            BitmapObstacle = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\obstacle.png");
+            BitmapPredator = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\predator.jpg");
+            BitmapPrey = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\prey.jpg");
+        }
+
         private ArrayOfOceanViewers()
         {
             _gameField = new FormGameField();
@@ -50,11 +66,11 @@ namespace OceanWinForms.UI
             }
         }
 
-        private void LaunchActiveOceans(IOceanLaunch[] oceanLaunches)
+        private void LaunchActiveOceans(IOceanLaunch[] oceanLaunchers)
         {
             int i = 0;
 
-            foreach (IOceanLaunch oceanLauncher in oceanLaunches)
+            foreach (IOceanLaunch oceanLauncher in oceanLaunchers)
             {
                 if (!oceanLauncher.IsDone)
                 {
