@@ -3,22 +3,27 @@
     internal class GroupBoxOcean : Control
     {
         #region Consts
-        private const int GroupBoxWidth = 527;
-        private const int GroupBoxHeight = 640;
-        private const int TableLayoutPanelWidth = 520;
+        private const int GroupBoxWidth = 900;
+        private const int GroupBoxHeight = 740;
+        private const int LabelWidth = 875;
+        private const int LabelHeight = 40;
+        private const int PBWidth = 30;
+        private const int PBHeight = 30;
+        private const int TableLayoutPanelWidth = 860;
         private const int TableLayoutPanelHeight = 333;
         private const int LblIterationsX = 20;
         private const int LblIterationsY = 34;
         private const int LblObstaclesX = 20;
-        private const int LblObstaclesY = 59;
+        private const int LblObstaclesY = 82;
         private const int LblPredatorsX = 20;
-        private const int LblPredatorsY = 87;
+        private const int LblPredatorsY = 130;
         private const int LblPreyX = 20;
-        private const int LblPreyY = 117;
+        private const int LblPreyY = 178;
         private const int LblGameStateX = 20;
-        private const int LblGameStateY = 590;
-        private const int TablePanelOceanX = 6;
-        private const int TablePanelOceanY = 150;
+        private const int LblGameStateY = 680;
+        private const int TablePanelOceanX = 20;
+        private const int TablePanelOceanY = 240;
+        private float DefaultFontSIze = 13.8f;
         #endregion
 
         #region Ctors
@@ -47,6 +52,9 @@
             groupBox.Size = new Size(GroupBoxWidth, GroupBoxHeight);
             groupBox.Text = "Ocean " + number;
             groupBox.Name = "grbxOcean" + number;
+            groupBox.BackColor = Color.DarkOliveGreen;
+            groupBox.ForeColor = Color.White;
+            groupBox.Font = new Font("Sitka Text", 13.8f);
 
             LblNumberOfIterations = CreateLabel("Iteration number: ", "lblNumberOfIterations", number);
             AddControl(groupBox, LblNumberOfIterations, new Point(LblIterationsX, LblIterationsY));
@@ -74,7 +82,11 @@
             Label label = new Label();
             label.Text = text + number;
             label.Name = name + number;
-            label.Size = new Size(200, 28);
+            label.AutoSize = false;
+            label.Size = new Size(LabelWidth, LabelHeight);
+            label.Font = new Font("Sitka Text", DefaultFontSIze);
+            label.ForeColor = Color.White;
+            label.BackColor = Color.CornflowerBlue;
 
             return label;
         }
@@ -96,7 +108,7 @@
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    tableLayoutPanel.Controls.Add(new PictureBox() { Size = new Size(30, 30), Name = "pb" + i + "" + j, SizeMode = PictureBoxSizeMode.Zoom }, i, j);
+                    tableLayoutPanel.Controls.Add(new PictureBox() { Size = new Size(PBWidth, PBHeight), Name = "pb" + i + "" + j, SizeMode = PictureBoxSizeMode.Zoom }, j, i);
                 }
             }
 

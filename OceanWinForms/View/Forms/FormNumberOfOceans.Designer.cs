@@ -37,35 +37,46 @@
             // lblNumberOfOceans
             // 
             this.lblNumberOfOceans.AutoSize = true;
+            this.lblNumberOfOceans.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.lblNumberOfOceans.Font = new System.Drawing.Font("Sitka Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lblNumberOfOceans.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.lblNumberOfOceans.Location = new System.Drawing.Point(12, 9);
             this.lblNumberOfOceans.Name = "lblNumberOfOceans";
-            this.lblNumberOfOceans.Size = new System.Drawing.Size(191, 20);
+            this.lblNumberOfOceans.Size = new System.Drawing.Size(285, 29);
             this.lblNumberOfOceans.TabIndex = 0;
-            this.lblNumberOfOceans.Text = "Enter the number of oceans";
+            this.lblNumberOfOceans.Text = "Enter the number of oceans: ";
             // 
             // txtNumberOfOceans
             // 
-            this.txtNumberOfOceans.Location = new System.Drawing.Point(215, 6);
+            this.txtNumberOfOceans.BackColor = System.Drawing.Color.MediumTurquoise;
+            this.txtNumberOfOceans.Font = new System.Drawing.Font("Microsoft PhagsPa", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.txtNumberOfOceans.ForeColor = System.Drawing.Color.DimGray;
+            this.txtNumberOfOceans.Location = new System.Drawing.Point(315, 5);
             this.txtNumberOfOceans.Name = "txtNumberOfOceans";
-            this.txtNumberOfOceans.Size = new System.Drawing.Size(125, 27);
+            this.txtNumberOfOceans.Size = new System.Drawing.Size(86, 33);
             this.txtNumberOfOceans.TabIndex = 1;
             this.txtNumberOfOceans.Text = "1";
             // 
             // btnSubmitNumberOfOceans
             // 
-            this.btnSubmitNumberOfOceans.Location = new System.Drawing.Point(215, 52);
+            this.btnSubmitNumberOfOceans.BackColor = System.Drawing.Color.DarkSlateBlue;
+            this.btnSubmitNumberOfOceans.Font = new System.Drawing.Font("Sitka Text", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnSubmitNumberOfOceans.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.btnSubmitNumberOfOceans.Location = new System.Drawing.Point(276, 62);
             this.btnSubmitNumberOfOceans.Name = "btnSubmitNumberOfOceans";
-            this.btnSubmitNumberOfOceans.Size = new System.Drawing.Size(125, 29);
+            this.btnSubmitNumberOfOceans.Size = new System.Drawing.Size(125, 38);
             this.btnSubmitNumberOfOceans.TabIndex = 2;
             this.btnSubmitNumberOfOceans.Text = "Ok";
-            this.btnSubmitNumberOfOceans.UseVisualStyleBackColor = true;
+            this.btnSubmitNumberOfOceans.UseVisualStyleBackColor = false;
             this.btnSubmitNumberOfOceans.Click += new System.EventHandler(this.SubmitNumberOfOceans_Click);
             // 
             // FormNumberOfOceans
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(352, 92);
+            this.BackgroundImage = global::OceanWinForms.Properties.Resources.numberOfOceans;
+            this.CancelButton = this.btnSubmitNumberOfOceans;
+            this.ClientSize = new System.Drawing.Size(403, 107);
             this.Controls.Add(this.btnSubmitNumberOfOceans);
             this.Controls.Add(this.txtNumberOfOceans);
             this.Controls.Add(this.lblNumberOfOceans);

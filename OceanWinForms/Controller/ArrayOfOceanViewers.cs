@@ -10,10 +10,10 @@ namespace OceanWinForms.UI
         #endregion
 
         #region Static
-        public static Bitmap BitmapEmpty;
-        public static Bitmap BitmapObstacle;
-        public static Bitmap BitmapPredator;
-        public static Bitmap BitmapPrey;
+        public readonly static Bitmap BitmapEmpty;
+        public readonly static Bitmap BitmapObstacle;
+        public readonly static Bitmap BitmapPredator;
+        public readonly static Bitmap BitmapPrey;
         #endregion
 
         #region Fields
@@ -44,7 +44,12 @@ namespace OceanWinForms.UI
         public ArrayOfOceanViewers(string length) : this()
         {
             int number;
-            Int32.TryParse(length, out number);
+
+            if (!Int32.TryParse(length, out number))
+            {
+                MessageBox.Show("Invalid input, so the it will be set its default value");
+                number = 1;
+            }
 
             _oceanViewers = new IOceanLaunch[number];
         }
@@ -91,13 +96,21 @@ namespace OceanWinForms.UI
         {
             int topInt;
             int leftInt;
+            bool wholeSuccess;
 
             count++;
 
-            Int32.TryParse(top, out topInt);
-            Int32.TryParse(left, out leftInt);
+            bool successTop = Int32.TryParse(top, out topInt);
+            bool successLeft = Int32.TryParse(left, out leftInt);
+
+            wholeSuccess = successTop && successLeft;
 
             _oceanViewers[count - 1] = new OceanViewer(_gameField, new AutoResetEvent(false), count, topInt, leftInt, iterations, obstacles, predators, prey);
+
+            if (!wholeSuccess)
+            {
+                _oceanViewers[count - 1].DisplayValidationMessage(!wholeSuccess);
+            }
 
             Task task = _oceanViewers[count - 1].Launch();
             task.Start();
