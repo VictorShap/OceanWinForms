@@ -6,6 +6,8 @@
 
         bool IsDone { get; }
 
+        void DisplayValidationMessage(bool wasFormatException);
+
         Task Launch();
     }
 }
