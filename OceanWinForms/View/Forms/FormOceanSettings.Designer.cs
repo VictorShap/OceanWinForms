@@ -227,7 +227,9 @@
             this.Controls.Add(this.lblNumberOfObstacles);
             this.Controls.Add(this.txtNumberOfIterations);
             this.Controls.Add(this.lblNumberOfIterations);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "FormOceanSettings";
             this.Text = "Ocean simulation settings";
             this.ResumeLayout(false);

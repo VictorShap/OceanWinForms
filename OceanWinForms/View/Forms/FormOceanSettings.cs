@@ -20,6 +20,8 @@ namespace OceanWinForms
         }
         #endregion
 
+        #region Methods
+
         #region Event handlers
         private void StartOcean_Click(object sender, EventArgs e)
         {
@@ -29,5 +31,6 @@ namespace OceanWinForms
         }
         #endregion
 
+        #endregion
     }
 }
