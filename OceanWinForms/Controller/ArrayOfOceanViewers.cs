@@ -5,7 +5,7 @@ namespace OceanWinForms.UI
     public class ArrayOfOceanViewers
     {
         #region Readonly
-        private readonly IOceanLaunch[] _oceanViewers;
+        private readonly List<IOceanLaunch> _oceanViewers;
         private readonly FormGameField _gameField;
         #endregion
 
@@ -17,8 +17,7 @@ namespace OceanWinForms.UI
         #endregion
 
         #region Fields
-        private bool _isDone;
-        private int count;
+        private int _count;
         #endregion
 
         #region Ctors
@@ -38,7 +37,7 @@ namespace OceanWinForms.UI
 
         public ArrayOfOceanViewers(int length) : this()
         {
-            _oceanViewers = new IOceanLaunch[length];
+            _oceanViewers = new List<IOceanLaunch>(length);
         }
 
         public ArrayOfOceanViewers(string length) : this()
@@ -51,10 +50,10 @@ namespace OceanWinForms.UI
                 number = 1;
             }
 
-            _oceanViewers = new IOceanLaunch[number];
+            _oceanViewers = new List<IOceanLaunch>(number);
         }
 
-        public ArrayOfOceanViewers(IOceanLaunch[] oceanLaunchers) : this()
+        public ArrayOfOceanViewers(List<IOceanLaunch> oceanLaunchers) : this()
         {
             _oceanViewers = oceanLaunchers;
         }
@@ -65,30 +64,18 @@ namespace OceanWinForms.UI
         #region Private Methods
         private void Iterate()
         {
-            while (!_isDone)
+            while (_oceanViewers.Count > 0)
             {
-                LaunchActiveOceans(_oceanViewers);
+                LaunchActiveOceans();
             }
         }
 
-        private void LaunchActiveOceans(IOceanLaunch[] oceanLaunchers)
+        private void LaunchActiveOceans()
         {
-            int i = 0;
-
-            foreach (IOceanLaunch oceanLauncher in oceanLaunchers)
+            foreach (IOceanLaunch oceanLauncher in _oceanViewers.ToArray())
             {
-                if (!oceanLauncher.IsDone)
-                {
-                    i++;
-
-                    oceanLauncher.AutoResetEvent.Set();
-                    oceanLauncher.AutoResetEvent.WaitOne();
-                }
-            }
-
-            if (i == 0)
-            {
-                _isDone = true;
+                oceanLauncher?.AutoResetEvent.Set();
+                oceanLauncher?.AutoResetEvent.WaitOne();
             }
         }
 
@@ -98,36 +85,73 @@ namespace OceanWinForms.UI
             int leftInt;
             bool wholeSuccess;
 
-            count++;
-
             bool successTop = Int32.TryParse(top, out topInt);
             bool successLeft = Int32.TryParse(left, out leftInt);
 
             wholeSuccess = successTop && successLeft;
 
-            _oceanViewers[count - 1] = new OceanViewer(_gameField, new AutoResetEvent(false), count, topInt, leftInt, iterations, obstacles, predators, prey);
+            IOceanLaunch currentOceanViewer = new OceanViewer(_gameField, new AutoResetEvent(false), ++_count, topInt, leftInt, iterations, obstacles, predators, prey);
+            currentOceanViewer.OceanSimulationFinished += OnOceanSimulationFinish;
+            currentOceanViewer.OceanHasBeenDeleted += OnOceanHasBeenDeleted;
+            currentOceanViewer.OceanHasBeenPaused += OnOceanHasBeenPaused;
+            currentOceanViewer.OceanHasBeenResumed += OnOceanHasBeenResumed;
+            _oceanViewers.Add(currentOceanViewer);
 
             if (!wholeSuccess)
             {
-                _oceanViewers[count - 1].DisplayValidationMessage(!wholeSuccess);
+                currentOceanViewer.DisplayValidationMessage(!wholeSuccess);
             }
 
-            Task task = _oceanViewers[count - 1].Launch();
+            Task task = currentOceanViewer.Launch();
             task.Start();
 
-            _oceanViewers[count - 1].AutoResetEvent.WaitOne();
+            currentOceanViewer.AutoResetEvent.WaitOne();
 
-            if (count == _oceanViewers.Length)
+            if (_count == _oceanViewers.Capacity)
             {
-                Iterate();
+                Task.Run(() => Iterate());
             }
         }
-        #endregion 
+        #endregion
+
+        #region Event handlers
+        private void OnOceanSimulationFinish(object sender, EventArgs e)
+        {
+            _oceanViewers.Remove(sender as IOceanLaunch);
+        }
+
+        private void OnOceanHasBeenDeleted(object sender, EventArgs e)
+        {
+            _oceanViewers.Remove(sender as IOceanLaunch);
+
+            if (_oceanViewers.Count == 0)
+            {
+                MessageBox.Show("There are no oceans on the game field, so the form will be closed");
+
+                _gameField.Close();
+            }
+        }
+
+        private void OnOceanHasBeenPaused(object sender, EventArgs e)
+        {
+            _oceanViewers.Remove(sender as IOceanLaunch);
+        }
+
+        private void OnOceanHasBeenResumed(object sender, EventArgs e)
+        {
+            _oceanViewers.Add(sender as IOceanLaunch);
+
+            if (_oceanViewers.Count == 1)
+            {
+                Task.Run(() => Iterate());
+            }
+        }
+        #endregion
 
         #region Public methods
         public void Run()
         {
-            for (int i = 0; i < _oceanViewers.Length; i++)
+            for (int i = 0; i < _oceanViewers.Capacity; i++)
             {
                 new FormOceanSettings(this).Show();
             }

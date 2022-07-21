@@ -3,6 +3,13 @@ namespace OceanWinForms.CustomControls
 {
     internal class TableLayoutPanelDoubleBuff : TableLayoutPanel
     {
+        #region Ctor
+        public TableLayoutPanelDoubleBuff() : base()
+        {
+
+        }
+        #endregion
+
         #region Properties
         protected override CreateParams CreateParams
         {
@@ -12,13 +19,6 @@ namespace OceanWinForms.CustomControls
                 cp.ExStyle |= 0x02000000;
                 return cp;
             }
-        }
-        #endregion
-
-        #region Ctor
-        public TableLayoutPanelDoubleBuff() : base()
-        {
-
         }
         #endregion
 

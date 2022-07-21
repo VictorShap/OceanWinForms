@@ -6,6 +6,7 @@ using OceanWinForms.UI.OceanViewerInterfaces;
 using OceanLibrary.Exceptions;
 using OceanWinForms.Util;
 using OceanWinForms.CustomControls;
+using OceanWinForms.Controller.Delegates;
 
 namespace OceanWinForms.UI
 {
@@ -28,13 +29,7 @@ namespace OceanWinForms.UI
         #endregion
 
         #region Fields
-        private bool _isDone;
         private bool _wasValidationMessage;
-        #endregion
-
-        #region Properties
-        public AutoResetEvent AutoResetEvent { get => _autoResetEvent; }
-        public bool IsDone { get => _isDone; }
         #endregion
 
         #region Ctors
@@ -68,6 +63,11 @@ namespace OceanWinForms.UI
         {
             _groupBoxOcean = new GroupBoxOcean(indexNumber, _ocean.NumRows, _ocean.NumColumns);
 
+            _groupBoxOcean.ButtonDeleteClicked += OnButtonDeleteClick;
+            _groupBoxOcean.ButtonPauseClicked += OnButtonPauseClick;
+            _groupBoxOcean.ButtonResumeClicked += OnButtonResumeClick;
+
+
             ChangeControls(
                 () =>
                 {
@@ -83,6 +83,62 @@ namespace OceanWinForms.UI
                 },
                _groupBoxOcean.GroupBox
                 );
+        }
+        #endregion
+
+        #region Properties
+        public AutoResetEvent AutoResetEvent { get => _autoResetEvent; }
+        #endregion
+
+        #region Events
+        private event OceanSimulationEventHandler _OceanSimulationFinished;
+        private event OceanSimulationEventHandler _OceanHasBeenDeleted;
+        private event OceanSimulationEventHandler _OceanHasBeenPaused;
+        private event OceanSimulationEventHandler _OceanHasBeenResumed;
+
+        public event OceanSimulationEventHandler OceanSimulationFinished
+        {
+            add
+            {
+                _OceanSimulationFinished += value;
+            }
+            remove
+            {
+                _OceanSimulationFinished -= value;
+            }
+        }
+        public event OceanSimulationEventHandler OceanHasBeenDeleted
+        {
+            add
+            {
+                _OceanHasBeenDeleted += value;
+            }
+            remove
+            {
+                _OceanHasBeenDeleted -= value;
+            }
+        }
+        public event OceanSimulationEventHandler OceanHasBeenPaused
+        {
+            add
+            {
+                _OceanHasBeenPaused += value;
+            }
+            remove
+            {
+                _OceanHasBeenPaused -= value;
+            }
+        }
+        public event OceanSimulationEventHandler OceanHasBeenResumed
+        {
+            add
+            {
+                _OceanHasBeenResumed += value;
+            }
+            remove
+            {
+                _OceanHasBeenResumed -= value;
+            }
         }
         #endregion
 
@@ -129,43 +185,37 @@ namespace OceanWinForms.UI
               },
              _groupBoxOcean.TableLayoutPaneltOcean);
 
-            try
+            for (int row = 0; row < _ocean.NumRows; row++)
             {
-                for (int row = 0; row < _ocean.NumRows; row++)
+                for (int column = 0; column < _ocean.NumColumns; column++)
                 {
-                    for (int column = 0; column < _ocean.NumColumns; column++)
+                    PictureBox? pb = _groupBoxOcean.TableLayoutPaneltOcean.Controls["pb" + row + "" + column] as PictureBox;
+
+                    if (pb == null)
                     {
-                        PictureBox pb = _groupBoxOcean.TableLayoutPaneltOcean.Controls["pb" + row + "" + column] as PictureBox;
+                        continue;
+                    }
 
-                        if (_ocean[row, column] == null)
-                        {
-                            ChangeControls(
-                            () =>
-                              {
-                                  pb.Image = ArrayOfOceanViewers.BitmapEmpty;
-                              },
-                            _groupBoxOcean.TableLayoutPaneltOcean);
+                    if (_ocean[row, column] == null)
+                    {
+                        ChangeControls(
+                        () =>
+                          {
+                              pb.Image = ArrayOfOceanViewers.BitmapEmpty;
+                          },
+                        _groupBoxOcean.TableLayoutPaneltOcean);
 
-                        }
-                        else
-                        {
-                            ChangeControls(
-                            () =>
-                              {
-                                  pb.Image = GetImage(_ocean[row, column]);
-                              },
-                            _groupBoxOcean.TableLayoutPaneltOcean);
-                        }
+                    }
+                    else
+                    {
+                        ChangeControls(
+                        () =>
+                          {
+                              pb.Image = GetImage(_ocean[row, column]);
+                          },
+                        _groupBoxOcean.TableLayoutPaneltOcean);
                     }
                 }
-            }
-            catch (InvalidCoordinateException e)
-            {
-                MessageBox.Show(e.Message + ": \nX:" + e.X + "\nY:" + e.Y);
-            }
-            catch (ObjectDisposedException e)
-            {
-                MessageBox.Show(e.Message);
             }
 
             if (_ocean.CurrentIteration == 1)
@@ -195,7 +245,7 @@ namespace OceanWinForms.UI
 
         private Bitmap GetImage(OceanLibrary.Ocean.CellTypes.Cell cell)
         {
-            switch (cell.CellType)
+            switch (cell?.CellType)
             {
                 case OceanLibrary.Ocean.CellTypes.Enums.CellType.Obstacle:
 
@@ -220,7 +270,7 @@ namespace OceanWinForms.UI
         {
             try
             {
-                if (!control.IsDisposed)
+                if (!control.Disposing && !control.IsDisposed)
                 {
                     if (control.InvokeRequired)
                     {
@@ -239,6 +289,39 @@ namespace OceanWinForms.UI
         }
         #endregion
 
+        #endregion
+
+        #region Event handlers
+        private void OnButtonDeleteClick(object sender, EventArgs e)
+        {
+            _groupBoxOcean.GroupBox.Hide();
+            _OceanHasBeenDeleted.Invoke(this, e);
+            _groupBoxOcean.Dispose();
+        }
+
+        private void OnButtonPauseClick(object sender, EventArgs e)
+        {
+            ChangeControls(
+               () =>
+               {
+                   _groupBoxOcean.LblGameState.Text = "Paused";
+               },
+                _groupBoxOcean.LblGameState);
+
+            _OceanHasBeenPaused.Invoke(this, e);
+        }
+
+        private void OnButtonResumeClick(object sender, EventArgs e)
+        {
+            ChangeControls(
+               () =>
+               {
+                   _groupBoxOcean.LblGameState.Text = "Running...";
+               },
+                _groupBoxOcean.LblGameState);
+
+            _OceanHasBeenResumed.Invoke(this, e);
+        }
         #endregion
 
         #region Public Methods
@@ -281,7 +364,7 @@ namespace OceanWinForms.UI
 
                     System.Windows.Forms.Application.DoEvents();
 
-                    _isDone = true;
+                    _OceanSimulationFinished.Invoke(this, EventArgs.Empty);
 
                     _autoResetEvent.Set();
                     _autoResetEvent.Dispose();
@@ -295,6 +378,7 @@ namespace OceanWinForms.UI
             if (!wasFormatException && !_wasValidationMessage)
             {
                 MessageBox.Show("Invalid value, so it will be set to maximum possible value");
+
                 _wasValidationMessage = true;
             }
             else if (!_wasValidationMessage)
@@ -305,8 +389,19 @@ namespace OceanWinForms.UI
 
         public void DisplayIteration()
         {
-            DisplayCells();
-            DisplayStats();
+            try
+            {
+                DisplayStats();
+                DisplayCells();
+            }
+            catch (InvalidCoordinateException e)
+            {
+                MessageBox.Show(e.Message + ": \nX:" + e.X + "\nY:" + e.Y);
+            }
+            catch (ObjectDisposedException e)
+            {
+                MessageBox.Show(e.Message);
+            }
 
             System.Windows.Forms.Application.DoEvents();
 
