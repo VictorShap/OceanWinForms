@@ -7,6 +7,7 @@ using OceanLibrary.Exceptions;
 using OceanWinForms.Util;
 using OceanWinForms.CustomControls;
 using OceanWinForms.Controller.Delegates;
+using System.Diagnostics;
 
 namespace OceanWinForms.UI
 {
@@ -400,7 +401,7 @@ namespace OceanWinForms.UI
             }
             catch (ObjectDisposedException e)
             {
-                MessageBox.Show(e.Message);
+                Debug.WriteLine(e.Message);
             }
 
             System.Windows.Forms.Application.DoEvents();
