@@ -23,7 +23,6 @@ namespace OceanWinForms.UI
         #region Ctors
         static ArrayOfOceanViewers()
         {
-
             BitmapEmpty = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\empty.jpg");
             BitmapObstacle = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\obstacle.png");
             BitmapPredator = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\predator.jpg");

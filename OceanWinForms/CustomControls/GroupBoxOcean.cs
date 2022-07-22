@@ -103,8 +103,8 @@ namespace OceanWinForms.CustomControls
         {
             GroupBox groupBox = new GroupBox();
             groupBox.Size = new Size(GroupBoxWidth, GroupBoxHeight);
-            groupBox.Text = "Ocean " + number;
-            groupBox.Name = "grbxOcean" + number;
+            groupBox.Text = String.Format("Ocean {0}", number);
+            groupBox.Name = String.Format("grbxOcean{0}", number);
             groupBox.BackColor = Color.DarkOliveGreen;
             groupBox.ForeColor = Color.White;
             groupBox.Font = new Font("Sitka Text", 13.8f);
@@ -145,7 +145,7 @@ namespace OceanWinForms.CustomControls
         private Label CreateLabel(string text, string name, int number)
         {
             Label label = new Label();
-            label.Text = text + number;
+            label.Text = text;
             label.Name = name + number;
             label.AutoSize = false;
             label.Size = new Size(LabelWidth, LabelHeight);
@@ -160,7 +160,7 @@ namespace OceanWinForms.CustomControls
         {
             TableLayoutPanelDoubleBuff tableLayoutPanel = new TableLayoutPanelDoubleBuff();
             tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tableLayoutPanel.Name = "tableLayoutPanel" + number;
+            tableLayoutPanel.Name = String.Format("tableLayoutPanel{0}", number);
             tableLayoutPanel.ColumnCount = columns;
             tableLayoutPanel.RowCount = rows;
             tableLayoutPanel.Size = new Size(TableLayoutPanelWidth, TableLayoutPanelHeight);
@@ -173,7 +173,7 @@ namespace OceanWinForms.CustomControls
             {
                 for (int j = 0; j < columns; j++)
                 {
-                    tableLayoutPanel.Controls.Add(new PictureBox() { Size = new Size(PBWidth, PBHeight), Name = "pb" + i + "" + j, SizeMode = PictureBoxSizeMode.Zoom }, j, i);
+                    tableLayoutPanel.Controls.Add(new PictureBox() { Size = new Size(PBWidth, PBHeight), Name = String.Format("pb{0}{1}", i, j), SizeMode = PictureBoxSizeMode.Zoom }, j, i);
                 }
             }
 

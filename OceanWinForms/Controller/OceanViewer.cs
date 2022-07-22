@@ -151,28 +151,28 @@ namespace OceanWinForms.UI
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfIterations.Text = "Iteration number: " + _ocean.CurrentIteration;
+                    _groupBoxOcean.LblNumberOfIterations.Text = String.Format("Iteration number: {0}", _ocean.CurrentIteration);
                 },
               _groupBoxOcean.LblNumberOfIterations);
 
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfObstacles.Text = "Obstacles: " + _ocean.NumObstacles;
+                    _groupBoxOcean.LblNumberOfObstacles.Text = String.Format("Obstacles: {0}", _ocean.NumObstacles);
                 },
              _groupBoxOcean.LblNumberOfObstacles);
 
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfPredators.Text = "Predators: " + _ocean.NumPredators;
+                    _groupBoxOcean.LblNumberOfPredators.Text = String.Format("Predators: {0}", _ocean.NumPredators);
                 },
               _groupBoxOcean.LblNumberOfPredators);
 
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfPrey.Text = "Prey: " + _ocean.NumPrey;
+                    _groupBoxOcean.LblNumberOfPrey.Text = String.Format("Prey: {0}", _ocean.NumPrey);
                 },
               _groupBoxOcean.LblNumberOfPrey);
         }
@@ -397,7 +397,7 @@ namespace OceanWinForms.UI
             }
             catch (InvalidCoordinateException e)
             {
-                MessageBox.Show(e.Message + ": \nX:" + e.X + "\nY:" + e.Y);
+                MessageBox.Show(String.Format("{0}: \nX: {1} \nY: {2}", e.Message, e.X, e.Y));
             }
             catch (ObjectDisposedException e)
             {
