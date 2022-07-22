@@ -1,4 +1,5 @@
-﻿using OceanWinForms.Controller.Delegates;
+﻿using System.Reflection;
+using OceanWinForms.Controller.Delegates;
 
 namespace OceanWinForms.CustomControls
 {
@@ -38,9 +39,9 @@ namespace OceanWinForms.CustomControls
         #endregion
 
         #region Ctors
-        public GroupBoxOcean(int number, int rows, int columns)
+        public GroupBoxOcean(int indexNumber, int rows, int columns)
         {
-            GroupBox = CreateGroupBox(number, rows, columns);
+            GroupBox = CreateGroupBox(indexNumber, rows, columns);
         }
         #endregion
 
@@ -99,54 +100,26 @@ namespace OceanWinForms.CustomControls
 
         #region Methods
         #region Creating controls
-        private GroupBox CreateGroupBox(int number, int rows, int columns)
+        private GroupBox CreateGroupBox(int indexNumber, int rows, int columns)
         {
             GroupBox groupBox = new GroupBox();
             groupBox.Size = new Size(GroupBoxWidth, GroupBoxHeight);
-            groupBox.Text = String.Format("Ocean {0}", number);
-            groupBox.Name = String.Format("grbxOcean{0}", number);
+            groupBox.Text = String.Format("Ocean {0}", indexNumber);
+            groupBox.Name = String.Format("grbxOcean{0}", indexNumber);
             groupBox.BackColor = Color.DarkOliveGreen;
             groupBox.ForeColor = Color.White;
             groupBox.Font = new Font("Sitka Text", 13.8f);
 
-            LblNumberOfIterations = CreateLabel("Iteration number: ", "lblNumberOfIterations", number);
-            AddControl(groupBox, LblNumberOfIterations, new Point(LblIterationsX, LblIterationsY));
-
-            LblNumberOfObstacles = CreateLabel("Obstacles: ", "lblNumberOfObstacles", number);
-            AddControl(groupBox, LblNumberOfObstacles, new Point(LblObstaclesX, LblObstaclesY));
-
-            LblNumberOfPredators = CreateLabel("Predators: ", "lblNumberOfPredators", number);
-            AddControl(groupBox, LblNumberOfPredators, new Point(LblPredatorsX, LblPredatorsY));
-
-            LblNumberOfPrey = CreateLabel("Prey: ", "lblNumberOfPrey", number);
-            AddControl(groupBox, LblNumberOfPrey, new Point(LblPreyX, LblPreyY));
-
-            LblGameState = CreateLabel("", "labelGameState", number);
-            AddControl(groupBox, LblGameState, new Point(LblGameStateX, LblGameStateY));
-
-            TableLayoutPaneltOcean = CreateTableLayoutPanel(number, rows, columns);
-            AddControl(groupBox, TableLayoutPaneltOcean, new Point(TablePanelOceanX, TablePanelOceanY));
-
-            ButtonDelete = CreateButton("Delete", "ButtonDelete", number);
-            ButtonDelete.Click += (object? sender, EventArgs e) => _ButtonDeleteClicked.Invoke(this, EventArgs.Empty);
-            AddControl(groupBox, ButtonDelete, new Point(ButtonDeleteX, ButtonDeleteY));
-
-            ButtonPause = CreateButton("Pause", "ButtonPause", number);
-            ButtonPause.Click += (object? sender, EventArgs e) => _ButtonPauseClicked.Invoke(this, EventArgs.Empty);
-            AddControl(groupBox, ButtonPause, new Point(ButtonPauseX, ButtonPauseY));
-
-            ButtonResume = CreateButton("Resume", "ButtonResume", number);
-            ButtonResume.Click += (object? sender, EventArgs e) => _ButtonResumeClicked.Invoke(this, EventArgs.Empty);
-            AddControl(groupBox, ButtonResume, new Point(ButtonResumeX, ButtonResumeY));
+            AssignGroupBox(groupBox, indexNumber, rows, columns);
 
             return groupBox;
         }
 
-        private Label CreateLabel(string text, string name, int number)
+        private Label CreateLabel(string text, string name, int indexNumber)
         {
             Label label = new Label();
             label.Text = text;
-            label.Name = name + number;
+            label.Name = name + indexNumber;
             label.AutoSize = false;
             label.Size = new Size(LabelWidth, LabelHeight);
             label.Font = new Font("Sitka Text", FontSizeForLabels);
@@ -156,11 +129,11 @@ namespace OceanWinForms.CustomControls
             return label;
         }
 
-        private TableLayoutPanelDoubleBuff CreateTableLayoutPanel(int number, int rows, int columns)
+        private TableLayoutPanelDoubleBuff CreateTableLayoutPanel(int indexNumber, int rows, int columns)
         {
             TableLayoutPanelDoubleBuff tableLayoutPanel = new TableLayoutPanelDoubleBuff();
             tableLayoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-            tableLayoutPanel.Name = String.Format("tableLayoutPanel{0}", number);
+            tableLayoutPanel.Name = String.Format("tableLayoutPanel{0}", indexNumber);
             tableLayoutPanel.ColumnCount = columns;
             tableLayoutPanel.RowCount = rows;
             tableLayoutPanel.Size = new Size(TableLayoutPanelWidth, TableLayoutPanelHeight);
@@ -169,27 +142,15 @@ namespace OceanWinForms.CustomControls
             tableLayoutPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanel.Visible = false;
 
-            for (int i = 0; i < rows; i++)
-            {
-                for (int j = 0; j < columns; j++)
-                {
-                    tableLayoutPanel.Controls.Add(new PictureBox() { Size = new Size(PBWidth, PBHeight), Name = String.Format("pb{0}{1}", i, j), SizeMode = PictureBoxSizeMode.Zoom }, j, i);
-                }
-            }
+            AssignTableLayoutPanelDoubleBuff(tableLayoutPanel, rows, columns);
 
             return tableLayoutPanel;
         }
 
-        private void AddControl(Control whereToAdd, Control control, Point point)
-        {
-            control.Location = point;
-            whereToAdd.Controls.Add(control);
-        }
-
-        private Button CreateButton(string text, string name, int number)
+        private Button CreateButton(string text, string name, int indexNumber)
         {
             Button button = new Button();
-            button.Name = name + number;
+            button.Name = name + indexNumber;
             button.Text = text;
             button.Font = new Font("Sitka Text", FontSizeForButtons);
             button.ForeColor = Color.White;
@@ -198,20 +159,68 @@ namespace OceanWinForms.CustomControls
 
             return button;
         }
+
+        private void AssignGroupBox(GroupBox groupBox, int indexNumber, int rows, int columns)
+        {
+            LblNumberOfIterations = CreateLabel("Iteration number: ", "lblNumberOfIterations", indexNumber);
+            AddControl(groupBox, LblNumberOfIterations, new Point(LblIterationsX, LblIterationsY));
+
+            LblNumberOfObstacles = CreateLabel("Obstacles: ", "lblNumberOfObstacles", indexNumber);
+            AddControl(groupBox, LblNumberOfObstacles, new Point(LblObstaclesX, LblObstaclesY));
+
+            LblNumberOfPredators = CreateLabel("Predators: ", "lblNumberOfPredators", indexNumber);
+            AddControl(groupBox, LblNumberOfPredators, new Point(LblPredatorsX, LblPredatorsY));
+
+            LblNumberOfPrey = CreateLabel("Prey: ", "lblNumberOfPrey", indexNumber);
+            AddControl(groupBox, LblNumberOfPrey, new Point(LblPreyX, LblPreyY));
+
+            LblGameState = CreateLabel("", "labelGameState", indexNumber);
+            AddControl(groupBox, LblGameState, new Point(LblGameStateX, LblGameStateY));
+
+            TableLayoutPaneltOcean = CreateTableLayoutPanel(indexNumber, rows, columns);
+            AddControl(groupBox, TableLayoutPaneltOcean, new Point(TablePanelOceanX, TablePanelOceanY));
+
+            ButtonDelete = CreateButton("Delete", "ButtonDelete", indexNumber);
+            ButtonDelete.Click += (object? sender, EventArgs e) => _ButtonDeleteClicked.Invoke(this, EventArgs.Empty);
+            AddControl(groupBox, ButtonDelete, new Point(ButtonDeleteX, ButtonDeleteY));
+
+            ButtonPause = CreateButton("Pause", "ButtonPause", indexNumber);
+            ButtonPause.Click += (object? sender, EventArgs e) => _ButtonPauseClicked.Invoke(this, EventArgs.Empty);
+            AddControl(groupBox, ButtonPause, new Point(ButtonPauseX, ButtonPauseY));
+
+            ButtonResume = CreateButton("Resume", "ButtonResume", indexNumber);
+            ButtonResume.Click += (object? sender, EventArgs e) => _ButtonResumeClicked.Invoke(this, EventArgs.Empty);
+            AddControl(groupBox, ButtonResume, new Point(ButtonResumeX, ButtonResumeY));
+        }
+
+        private void AssignTableLayoutPanelDoubleBuff(TableLayoutPanelDoubleBuff tableLayoutPanel, int rows, int columns)
+        {
+            for (int i = 0; i < rows; i++)
+            {
+                for (int j = 0; j < columns; j++)
+                {
+                    tableLayoutPanel.Controls.Add(new PictureBox() { Size = new Size(PBWidth, PBHeight), Name = String.Format("pb{0}{1}", i, j), SizeMode = PictureBoxSizeMode.Zoom }, j, i);
+                }
+            }
+        }
+
+        private void AddControl(Control whereToAdd, Control control, Point point)
+        {
+            control.Location = point;
+            whereToAdd.Controls.Add(control);
+        }
         #endregion
 
         #region Public
         public void Dispose()
         {
-            GroupBox.Dispose();
-            LblNumberOfIterations.Dispose();
-            LblNumberOfObstacles.Dispose();
-            LblNumberOfPredators.Dispose();
-            LblNumberOfPrey.Dispose();
-            TableLayoutPaneltOcean.Dispose();
-            ButtonDelete.Dispose();
-            ButtonResume.Dispose();
-            ButtonPause.Dispose();
+            Type type = this.GetType();
+
+            foreach (PropertyInfo propertyInfo in type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.DeclaredOnly))
+            {
+                IDisposable disposableProperty = propertyInfo.GetValue(this) as IDisposable;
+                disposableProperty.Dispose();
+            }
         }
         #endregion
 

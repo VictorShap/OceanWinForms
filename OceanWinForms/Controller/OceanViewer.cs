@@ -179,23 +179,11 @@ namespace OceanWinForms.UI
 
         private void DisplayCells()
         {
-            ChangeControls(
-              () =>
-              {
-                  _groupBoxOcean.TableLayoutPaneltOcean.Suspend();
-              },
-             _groupBoxOcean.TableLayoutPaneltOcean);
-
             for (int row = 0; row < _ocean.NumRows; row++)
             {
                 for (int column = 0; column < _ocean.NumColumns; column++)
                 {
-                    PictureBox? pb = _groupBoxOcean.TableLayoutPaneltOcean.Controls["pb" + row + "" + column] as PictureBox;
-
-                    if (pb == null)
-                    {
-                        continue;
-                    }
+                    PictureBox? pb = _groupBoxOcean.TableLayoutPaneltOcean.Controls[String.Format("pb{0}{1}", row, column)] as PictureBox;
 
                     if (_ocean[row, column] == null)
                     {
@@ -219,6 +207,11 @@ namespace OceanWinForms.UI
                 }
             }
 
+            DisplayGroupBox();
+        }
+
+        private void DisplayGroupBox()
+        {
             if (_ocean.CurrentIteration == 1)
             {
                 ChangeControls(
@@ -235,13 +228,6 @@ namespace OceanWinForms.UI
                     },
                     _groupBoxOcean.TableLayoutPaneltOcean);
             }
-
-            ChangeControls(
-              () =>
-              {
-                  _groupBoxOcean.TableLayoutPaneltOcean.Resume();
-              },
-              _groupBoxOcean.TableLayoutPaneltOcean);
         }
 
         private Bitmap GetImage(OceanLibrary.Ocean.CellTypes.Cell cell)
@@ -393,7 +379,10 @@ namespace OceanWinForms.UI
             try
             {
                 DisplayStats();
+
+                ChangeControls(() => _groupBoxOcean.TableLayoutPaneltOcean.Suspend(), _groupBoxOcean.TableLayoutPaneltOcean);
                 DisplayCells();
+                ChangeControls(() => _groupBoxOcean.TableLayoutPaneltOcean.Resume(), _groupBoxOcean.TableLayoutPaneltOcean);
             }
             catch (InvalidCoordinateException e)
             {
