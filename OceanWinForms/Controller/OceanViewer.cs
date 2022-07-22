@@ -7,6 +7,7 @@ using OceanLibrary.Exceptions;
 using OceanWinForms.Util;
 using OceanWinForms.CustomControls;
 using OceanWinForms.Controller.Delegates;
+using System.Diagnostics;
 
 namespace OceanWinForms.UI
 {
@@ -150,51 +151,39 @@ namespace OceanWinForms.UI
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfIterations.Text = "Iteration number: " + _ocean.CurrentIteration;
+                    _groupBoxOcean.LblNumberOfIterations.Text = String.Format("Iteration number: {0}", _ocean.CurrentIteration);
                 },
               _groupBoxOcean.LblNumberOfIterations);
 
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfObstacles.Text = "Obstacles: " + _ocean.NumObstacles;
+                    _groupBoxOcean.LblNumberOfObstacles.Text = String.Format("Obstacles: {0}", _ocean.NumObstacles);
                 },
              _groupBoxOcean.LblNumberOfObstacles);
 
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfPredators.Text = "Predators: " + _ocean.NumPredators;
+                    _groupBoxOcean.LblNumberOfPredators.Text = String.Format("Predators: {0}", _ocean.NumPredators);
                 },
               _groupBoxOcean.LblNumberOfPredators);
 
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfPrey.Text = "Prey: " + _ocean.NumPrey;
+                    _groupBoxOcean.LblNumberOfPrey.Text = String.Format("Prey: {0}", _ocean.NumPrey);
                 },
               _groupBoxOcean.LblNumberOfPrey);
         }
 
         private void DisplayCells()
         {
-            ChangeControls(
-              () =>
-              {
-                  _groupBoxOcean.TableLayoutPaneltOcean.Suspend();
-              },
-             _groupBoxOcean.TableLayoutPaneltOcean);
-
             for (int row = 0; row < _ocean.NumRows; row++)
             {
                 for (int column = 0; column < _ocean.NumColumns; column++)
                 {
-                    PictureBox? pb = _groupBoxOcean.TableLayoutPaneltOcean.Controls["pb" + row + "" + column] as PictureBox;
-
-                    if (pb == null)
-                    {
-                        continue;
-                    }
+                    PictureBox? pb = _groupBoxOcean.TableLayoutPaneltOcean.Controls[String.Format("pb{0}{1}", row, column)] as PictureBox;
 
                     if (_ocean[row, column] == null)
                     {
@@ -218,6 +207,11 @@ namespace OceanWinForms.UI
                 }
             }
 
+            DisplayGroupBox();
+        }
+
+        private void DisplayGroupBox()
+        {
             if (_ocean.CurrentIteration == 1)
             {
                 ChangeControls(
@@ -234,13 +228,6 @@ namespace OceanWinForms.UI
                     },
                     _groupBoxOcean.TableLayoutPaneltOcean);
             }
-
-            ChangeControls(
-              () =>
-              {
-                  _groupBoxOcean.TableLayoutPaneltOcean.Resume();
-              },
-              _groupBoxOcean.TableLayoutPaneltOcean);
         }
 
         private Bitmap GetImage(OceanLibrary.Ocean.CellTypes.Cell cell)
@@ -392,15 +379,18 @@ namespace OceanWinForms.UI
             try
             {
                 DisplayStats();
+
+                ChangeControls(() => _groupBoxOcean.TableLayoutPaneltOcean.Suspend(), _groupBoxOcean.TableLayoutPaneltOcean);
                 DisplayCells();
+                ChangeControls(() => _groupBoxOcean.TableLayoutPaneltOcean.Resume(), _groupBoxOcean.TableLayoutPaneltOcean);
             }
             catch (InvalidCoordinateException e)
             {
-                MessageBox.Show(e.Message + ": \nX:" + e.X + "\nY:" + e.Y);
+                MessageBox.Show(String.Format("{0}: \nX: {1} \nY: {2}", e.Message, e.X, e.Y));
             }
             catch (ObjectDisposedException e)
             {
-                MessageBox.Show(e.Message);
+                Debug.WriteLine(e.Message);
             }
 
             System.Windows.Forms.Application.DoEvents();

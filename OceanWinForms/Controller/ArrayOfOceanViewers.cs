@@ -17,13 +17,12 @@ namespace OceanWinForms.UI
         #endregion
 
         #region Fields
-        private int _count;
+        private int _numActiveOceans;
         #endregion
 
         #region Ctors
         static ArrayOfOceanViewers()
         {
-
             BitmapEmpty = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\empty.jpg");
             BitmapObstacle = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\obstacle.png");
             BitmapPredator = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\predator.jpg");
@@ -85,12 +84,9 @@ namespace OceanWinForms.UI
             int leftInt;
             bool wholeSuccess;
 
-            bool successTop = Int32.TryParse(top, out topInt);
-            bool successLeft = Int32.TryParse(left, out leftInt);
+            wholeSuccess = IsValid(top, left, out topInt, out leftInt);
 
-            wholeSuccess = successTop && successLeft;
-
-            IOceanLaunch currentOceanViewer = new OceanViewer(_gameField, new AutoResetEvent(false), ++_count, topInt, leftInt, iterations, obstacles, predators, prey);
+            IOceanLaunch currentOceanViewer = new OceanViewer(_gameField, new AutoResetEvent(false), ++_numActiveOceans, topInt, leftInt, iterations, obstacles, predators, prey);
             currentOceanViewer.OceanSimulationFinished += OnOceanSimulationFinish;
             currentOceanViewer.OceanHasBeenDeleted += OnOceanHasBeenDeleted;
             currentOceanViewer.OceanHasBeenPaused += OnOceanHasBeenPaused;
@@ -107,10 +103,20 @@ namespace OceanWinForms.UI
 
             currentOceanViewer.AutoResetEvent.WaitOne();
 
-            if (_count == _oceanViewers.Capacity)
+            if (_numActiveOceans == _oceanViewers.Capacity)
             {
                 Task.Run(() => Iterate());
+
+                _numActiveOceans = 0;
             }
+        }
+
+        private bool IsValid(string top, string left, out int topInt, out int leftInt)
+        {
+            bool successTop = Int32.TryParse(top, out topInt);
+            bool successLeft = Int32.TryParse(left, out leftInt);
+
+            return successTop && successLeft;
         }
         #endregion
 
@@ -124,7 +130,7 @@ namespace OceanWinForms.UI
         {
             _oceanViewers.Remove(sender as IOceanLaunch);
 
-            if (_oceanViewers.Count == 0)
+            if (_oceanViewers.Count == 0 && _numActiveOceans == 0)
             {
                 MessageBox.Show("There are no oceans on the game field, so the form will be closed");
 
@@ -135,6 +141,8 @@ namespace OceanWinForms.UI
         private void OnOceanHasBeenPaused(object sender, EventArgs e)
         {
             _oceanViewers.Remove(sender as IOceanLaunch);
+
+            _numActiveOceans++;
         }
 
         private void OnOceanHasBeenResumed(object sender, EventArgs e)
@@ -145,6 +153,8 @@ namespace OceanWinForms.UI
             {
                 Task.Run(() => Iterate());
             }
+
+            _numActiveOceans--;
         }
         #endregion
 
