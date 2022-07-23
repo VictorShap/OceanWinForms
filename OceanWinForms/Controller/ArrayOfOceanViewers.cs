@@ -140,21 +140,25 @@ namespace OceanWinForms.UI
 
         private void OnOceanHasBeenPaused(object sender, EventArgs e)
         {
-            _oceanViewers.Remove(sender as IOceanLaunch);
-
-            _numActiveOceans++;
+            if (_oceanViewers.Remove(sender as IOceanLaunch))
+            {
+                _numActiveOceans++;
+            }
         }
 
         private void OnOceanHasBeenResumed(object sender, EventArgs e)
         {
-            _oceanViewers.Add(sender as IOceanLaunch);
-
-            if (_oceanViewers.Count == 1)
+            if (!_oceanViewers.Contains(sender as IOceanLaunch))
             {
-                Task.Run(() => Iterate());
-            }
+                _oceanViewers.Add(sender as IOceanLaunch);
 
-            _numActiveOceans--;
+                if (_oceanViewers.Count == 1)
+                {
+                    Task.Run(() => Iterate());
+                }
+
+                _numActiveOceans--;
+            }
         }
         #endregion
 
