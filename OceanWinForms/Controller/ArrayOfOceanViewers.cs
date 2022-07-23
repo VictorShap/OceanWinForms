@@ -52,9 +52,9 @@ namespace OceanWinForms.UI
             _oceanViewers = new List<IOceanLaunch>(number);
         }
 
-        public ArrayOfOceanViewers(List<IOceanLaunch> oceanLaunchers) : this()
+        public ArrayOfOceanViewers(List<IOceanLaunch> oceanViewers) : this()
         {
-            _oceanViewers = oceanLaunchers;
+            _oceanViewers = oceanViewers;
         }
         #endregion
 
@@ -130,7 +130,9 @@ namespace OceanWinForms.UI
         {
             _oceanViewers.Remove(sender as IOceanLaunch);
 
-            if (_oceanViewers.Count == 0 && _numActiveOceans == 0)
+            _numActiveOceans--;
+
+            if (_oceanViewers.Count == 0 && _numActiveOceans <= 0)
             {
                 MessageBox.Show("There are no oceans on the game field, so the form will be closed");
 
@@ -173,7 +175,7 @@ namespace OceanWinForms.UI
 
         public void CreateGameField(string topCoordinate, string leftCoordinate, string iterations, string obstacles, string predators, string prey)
         {
-            this._gameField.Show();
+            _gameField.Show();
 
             Task.Run(() => this.InitializeViewers(topCoordinate, leftCoordinate, iterations, obstacles, predators, prey));
         }

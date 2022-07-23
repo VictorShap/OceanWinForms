@@ -193,7 +193,6 @@ namespace OceanWinForms.UI
                               pb.Image = ArrayOfOceanViewers.BitmapEmpty;
                           },
                         _groupBoxOcean.TableLayoutPaneltOcean);
-
                     }
                     else
                     {
@@ -380,9 +379,21 @@ namespace OceanWinForms.UI
             {
                 DisplayStats();
 
-                ChangeControls(() => _groupBoxOcean.TableLayoutPaneltOcean.Suspend(), _groupBoxOcean.TableLayoutPaneltOcean);
+                ChangeControls(
+                    () =>
+                    {
+                        _groupBoxOcean.TableLayoutPaneltOcean.Suspend();
+                    },
+                    _groupBoxOcean.TableLayoutPaneltOcean);
+
                 DisplayCells();
-                ChangeControls(() => _groupBoxOcean.TableLayoutPaneltOcean.Resume(), _groupBoxOcean.TableLayoutPaneltOcean);
+
+                ChangeControls(
+                    () =>
+                    {
+                        _groupBoxOcean.TableLayoutPaneltOcean.Resume();
+                    },
+                    _groupBoxOcean.TableLayoutPaneltOcean);
             }
             catch (InvalidCoordinateException e)
             {
