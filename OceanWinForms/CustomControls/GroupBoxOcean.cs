@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using OceanWinForms.Controller.Delegates;
+using OceanWinForms.Util;
 
 namespace OceanWinForms.CustomControls
 {
@@ -108,7 +109,9 @@ namespace OceanWinForms.CustomControls
             groupBox.Name = String.Format("grbxOcean{0}", indexNumber);
             groupBox.BackColor = Color.DarkOliveGreen;
             groupBox.ForeColor = Color.White;
-            groupBox.Font = new Font("Sitka Text", 13.8f);
+            groupBox.Font = new Font("Sitka Text", FontSizeForLabels);
+            groupBox.AllowDrop = true;
+            groupBox.Draggable(true);
 
             AssignGroupBox(groupBox, indexNumber, rows, columns);
 
