@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OceanWinForms", "OceanWinForms\OceanWinForms.csproj", "{C1A1C997-9914-49A6-9860-4F91BA9501DC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OceanLibrary", "..\OceanLibraryForWinForms\OceanLibrary\OceanLibrary.csproj", "{45E944B0-5C1B-4DDB-8930-B2DD10A1F13E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OceanLibrary", "OceanLibraryForWinForms\OceanLibrary\OceanLibrary.csproj", "{943FB427-4158-4914-8671-B51968D4337F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C1A1C997-9914-49A6-9860-4F91BA9501DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1A1C997-9914-49A6-9860-4F91BA9501DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1A1C997-9914-49A6-9860-4F91BA9501DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{45E944B0-5C1B-4DDB-8930-B2DD10A1F13E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{45E944B0-5C1B-4DDB-8930-B2DD10A1F13E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{45E944B0-5C1B-4DDB-8930-B2DD10A1F13E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{45E944B0-5C1B-4DDB-8930-B2DD10A1F13E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943FB427-4158-4914-8671-B51968D4337F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943FB427-4158-4914-8671-B51968D4337F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943FB427-4158-4914-8671-B51968D4337F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943FB427-4158-4914-8671-B51968D4337F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

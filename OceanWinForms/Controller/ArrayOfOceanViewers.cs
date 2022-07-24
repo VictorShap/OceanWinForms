@@ -73,8 +73,8 @@ namespace OceanWinForms.UI
         {
             foreach (IOceanLaunch oceanLauncher in _oceanViewers.ToArray())
             {
-                oceanLauncher?.AutoResetEvent.Set();
-                oceanLauncher?.AutoResetEvent.WaitOne();
+                oceanLauncher?.AutoResetEvent?.Set();
+                oceanLauncher?.AutoResetEvent?.WaitOne();
             }
         }
 
@@ -140,17 +140,21 @@ namespace OceanWinForms.UI
             }
         }
 
-        private void OnOceanHasBeenPaused(object sender, EventArgs e)
+        private bool OnOceanHasBeenPaused(object sender, EventArgs e)
         {
             if (_oceanViewers.Remove(sender as IOceanLaunch))
             {
                 _numActiveOceans++;
+
+                return true;
             }
+
+            return false;
         }
 
-        private void OnOceanHasBeenResumed(object sender, EventArgs e)
+        private bool OnOceanHasBeenResumed(object sender, EventArgs e)
         {
-            if (!_oceanViewers.Contains(sender as IOceanLaunch))
+            if (!_oceanViewers.Contains(sender as IOceanLaunch) && _numActiveOceans > 0)
             {
                 _oceanViewers.Add(sender as IOceanLaunch);
 
@@ -160,7 +164,11 @@ namespace OceanWinForms.UI
                 }
 
                 _numActiveOceans--;
+
+                return true;
             }
+
+            return false;
         }
         #endregion
 

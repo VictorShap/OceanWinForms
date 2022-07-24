@@ -60,11 +60,11 @@ namespace OceanWinForms.CustomControls
         #endregion
 
         #region Events
-        private event OceanSimulationEventHandler _ButtonDeleteClicked;
-        private event OceanSimulationEventHandler _ButtonResumeClicked;
-        private event OceanSimulationEventHandler _ButtonPauseClicked;
+        private event OceanRemoveEventHandler _ButtonDeleteClicked;
+        private event OceanRemoveEventHandler _ButtonResumeClicked;
+        private event OceanRemoveEventHandler _ButtonPauseClicked;
 
-        public event OceanSimulationEventHandler ButtonDeleteClicked
+        public event OceanRemoveEventHandler ButtonDeleteClicked
         {
             add
             {
@@ -75,7 +75,7 @@ namespace OceanWinForms.CustomControls
                 _ButtonDeleteClicked -= value;
             }
         }
-        public event OceanSimulationEventHandler ButtonResumeClicked
+        public event OceanRemoveEventHandler ButtonResumeClicked
         {
             add
             {
@@ -86,7 +86,7 @@ namespace OceanWinForms.CustomControls
                 _ButtonResumeClicked -= value;
             }
         }
-        public event OceanSimulationEventHandler ButtonPauseClicked
+        public event OceanRemoveEventHandler ButtonPauseClicked
         {
             add
             {
@@ -100,6 +100,7 @@ namespace OceanWinForms.CustomControls
         #endregion
 
         #region Methods
+
         #region Creating controls
         private GroupBox CreateGroupBox(int indexNumber, int rows, int columns)
         {
