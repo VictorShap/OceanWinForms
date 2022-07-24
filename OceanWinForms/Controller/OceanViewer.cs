@@ -92,12 +92,12 @@ namespace OceanWinForms.UI
         #endregion
 
         #region Events
-        private event OceanSimulationEventHandler _OceanSimulationFinished;
-        private event OceanSimulationEventHandler _OceanHasBeenDeleted;
-        private event OceanSimulationEventHandler _OceanHasBeenPaused;
-        private event OceanSimulationEventHandler _OceanHasBeenResumed;
+        private event OceanRemoveEventHandler _OceanSimulationFinished;
+        private event OceanRemoveEventHandler _OceanHasBeenDeleted;
+        private event OceanUserSuspendEventHandler _OceanHasBeenPaused;
+        private event OceanUserSuspendEventHandler _OceanHasBeenResumed;
 
-        public event OceanSimulationEventHandler OceanSimulationFinished
+        public event OceanRemoveEventHandler OceanSimulationFinished
         {
             add
             {
@@ -108,7 +108,7 @@ namespace OceanWinForms.UI
                 _OceanSimulationFinished -= value;
             }
         }
-        public event OceanSimulationEventHandler OceanHasBeenDeleted
+        public event OceanRemoveEventHandler OceanHasBeenDeleted
         {
             add
             {
@@ -119,7 +119,7 @@ namespace OceanWinForms.UI
                 _OceanHasBeenDeleted -= value;
             }
         }
-        public event OceanSimulationEventHandler OceanHasBeenPaused
+        public event OceanUserSuspendEventHandler OceanHasBeenPaused
         {
             add
             {
@@ -130,7 +130,7 @@ namespace OceanWinForms.UI
                 _OceanHasBeenPaused -= value;
             }
         }
-        public event OceanSimulationEventHandler OceanHasBeenResumed
+        public event OceanUserSuspendEventHandler OceanHasBeenResumed
         {
             add
             {
@@ -287,26 +287,28 @@ namespace OceanWinForms.UI
 
         private void OnButtonPauseClick(object sender, EventArgs e)
         {
-            ChangeControls(
-               () =>
-               {
-                   _groupBoxOcean.LblGameState.Text = "Paused";
-               },
-                _groupBoxOcean.LblGameState);
-
-            _OceanHasBeenPaused.Invoke(this, e);
+            if (_OceanHasBeenPaused.Invoke(this, e))
+            {
+                ChangeControls(
+              () =>
+             {
+                 _groupBoxOcean.LblGameState.Text = "Paused";
+             },
+              _groupBoxOcean.LblGameState);
+            }
         }
 
         private void OnButtonResumeClick(object sender, EventArgs e)
         {
-            ChangeControls(
-               () =>
-               {
-                   _groupBoxOcean.LblGameState.Text = "Running...";
-               },
-                _groupBoxOcean.LblGameState);
-
-            _OceanHasBeenResumed.Invoke(this, e);
+            if (_OceanHasBeenResumed.Invoke(this, e))
+            {
+                ChangeControls(
+                   () =>
+             {
+                 _groupBoxOcean.LblGameState.Text = "Running...";
+             },
+              _groupBoxOcean.LblGameState);
+            }
         }
         #endregion
 

@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\OceanLibraryForWinForms\OceanLibrary\OceanLibrary.csproj" />
+    <ProjectReference Include="..\OceanLibraryForWinForms\OceanLibrary\OceanLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -32,7 +32,6 @@ namespace OceanWinForms.CustomControls
             System.Reflection.BindingFlags.Instance);
             aProp.SetValue(c, true, null);
         }
-
         #endregion
     }
 }

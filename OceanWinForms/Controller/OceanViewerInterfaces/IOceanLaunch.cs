@@ -6,13 +6,13 @@ namespace OceanWinForms.UI.OceanViewerInterfaces
     {
         AutoResetEvent AutoResetEvent { get; }
 
-        event OceanSimulationEventHandler OceanSimulationFinished;
+        event OceanRemoveEventHandler OceanSimulationFinished;
 
-        event OceanSimulationEventHandler OceanHasBeenDeleted;
+        event OceanRemoveEventHandler OceanHasBeenDeleted;
 
-        event OceanSimulationEventHandler OceanHasBeenPaused;
+        event OceanUserSuspendEventHandler OceanHasBeenPaused;
 
-        event OceanSimulationEventHandler OceanHasBeenResumed;
+        event OceanUserSuspendEventHandler OceanHasBeenResumed;
 
         void DisplayValidationMessage(bool wasFormatException);
 
