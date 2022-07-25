@@ -8,6 +8,8 @@ namespace OceanLibrary.Ocean.OceanInterfaces
 
         Coordinate GetEmptyNeighborCoord(Coordinate currentCoordinate);
 
+        Coordinate GetNeighborPredatorCoord(Coordinate currentCoordinate);
+
         void MoveFrom(Coordinate from, Coordinate to);
     }
 }

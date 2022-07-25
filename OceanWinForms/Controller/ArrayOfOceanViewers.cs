@@ -14,6 +14,7 @@ namespace OceanWinForms.UI
         public readonly static Bitmap BitmapObstacle;
         public readonly static Bitmap BitmapPredator;
         public readonly static Bitmap BitmapPrey;
+        public readonly static Bitmap BitmapKillerWhale;
         #endregion
 
         #region Fields
@@ -27,6 +28,7 @@ namespace OceanWinForms.UI
             BitmapObstacle = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\obstacle.png");
             BitmapPredator = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\predator.jpg");
             BitmapPrey = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\prey.jpg");
+            BitmapKillerWhale = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\images.jpg");
         }
 
         private ArrayOfOceanViewers()
@@ -41,15 +43,7 @@ namespace OceanWinForms.UI
 
         public ArrayOfOceanViewers(string length) : this()
         {
-            int number;
-
-            if (!Int32.TryParse(length, out number))
-            {
-                MessageBox.Show("Invalid input, so the it will be set its default value");
-                number = 1;
-            }
-
-            _oceanViewers = new List<IOceanLaunch>(number);
+            _oceanViewers = new List<IOceanLaunch>(Validate(length));
         }
 
         public ArrayOfOceanViewers(List<IOceanLaunch> oceanViewers) : this()
@@ -117,6 +111,19 @@ namespace OceanWinForms.UI
             bool successLeft = Int32.TryParse(left, out leftInt);
 
             return successTop && successLeft;
+        }
+
+        private int Validate(string str)
+        {
+            int number;
+
+            if (!Int32.TryParse(str, out number))
+            {
+                MessageBox.Show("Invalid input, so the it will be set its default value");
+                number = 1;
+            }
+
+            return number;
         }
         #endregion
 
