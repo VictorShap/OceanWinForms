@@ -165,7 +165,7 @@ namespace OceanWinForms.UI
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfPredators.Text = String.Format("Predators: {0}", _ocean.NumPredators);
+                    _groupBoxOcean.LblNumberOfPredators.Text = String.Format("Sharks: {0}", _ocean.NumPredators);
                 },
               _groupBoxOcean.LblNumberOfPredators);
 
@@ -179,7 +179,7 @@ namespace OceanWinForms.UI
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfPrey.Text = String.Format("Prey: {0}", _ocean.NumPrey);
+                    _groupBoxOcean.LblNumberOfPrey.Text = String.Format("Fish: {0}", _ocean.NumPrey);
                 },
               _groupBoxOcean.LblNumberOfPrey);
         }

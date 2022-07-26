@@ -7,7 +7,7 @@ namespace OceanLibrary.Ocean.CellTypes
     {
         #region Consts
         private const int TimeToFeedDefault = 9;
-        private const int TimeToReproduceDefault = 9;
+        private const int TimeToReproduceDefault = 12;
         #endregion
 
         #region Ctors

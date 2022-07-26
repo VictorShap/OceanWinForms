@@ -175,13 +175,13 @@ namespace OceanWinForms.CustomControls
             LblNumberOfObstacles = CreateLabel("Obstacles: ", "lblNumberOfObstacles", indexNumber);
             AddControl(groupBox, LblNumberOfObstacles, new Point(LblObstaclesX, LblObstaclesY));
 
-            LblNumberOfPredators = CreateLabel("Predators: ", "lblNumberOfPredators", indexNumber);
+            LblNumberOfPredators = CreateLabel("Sharks: ", "lblNumberOfPredators", indexNumber);
             AddControl(groupBox, LblNumberOfPredators, new Point(LblPredatorsX, LblPredatorsY));
 
             LblNumberKillerWhales = CreateLabel("Killer whales: ", "lblNumberKillerWhales", indexNumber);
             AddControl(groupBox, LblNumberKillerWhales, new Point(LblKillerWhalesX, LblKillerWhalesY));
 
-            LblNumberOfPrey = CreateLabel("Prey: ", "lblNumberOfPrey", indexNumber);
+            LblNumberOfPrey = CreateLabel("Fish: ", "lblNumberOfPrey", indexNumber);
             AddControl(groupBox, LblNumberOfPrey, new Point(LblPreyX, LblPreyY));
 
             LblGameState = CreateLabel("", "labelGameState", indexNumber);

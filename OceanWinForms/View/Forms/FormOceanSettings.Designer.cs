@@ -77,7 +77,7 @@
             this.txtNumberOfObstacles.Name = "txtNumberOfObstacles";
             this.txtNumberOfObstacles.Size = new System.Drawing.Size(76, 33);
             this.txtNumberOfObstacles.TabIndex = 3;
-            this.txtNumberOfObstacles.Text = "50";
+            this.txtNumberOfObstacles.Text = "20";
             // 
             // lblNumberOfObstacles
             // 
@@ -100,7 +100,7 @@
             this.txtNumberOfPredators.Name = "txtNumberOfPredators";
             this.txtNumberOfPredators.Size = new System.Drawing.Size(79, 33);
             this.txtNumberOfPredators.TabIndex = 5;
-            this.txtNumberOfPredators.Text = "30";
+            this.txtNumberOfPredators.Text = "10";
             // 
             // lblNumberOfPredators
             // 
@@ -123,7 +123,7 @@
             this.txtNumberOfPrey.Name = "txtNumberOfPrey";
             this.txtNumberOfPrey.Size = new System.Drawing.Size(79, 33);
             this.txtNumberOfPrey.TabIndex = 7;
-            this.txtNumberOfPrey.Text = "80";
+            this.txtNumberOfPrey.Text = "50";
             // 
             // lblNumberOfPrey
             // 

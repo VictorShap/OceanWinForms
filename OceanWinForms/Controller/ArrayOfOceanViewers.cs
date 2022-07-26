@@ -24,11 +24,11 @@ namespace OceanWinForms.UI
         #region Ctors
         static ArrayOfOceanViewers()
         {
-            BitmapEmpty = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\empty.jpg");
-            BitmapObstacle = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\obstacle.png");
-            BitmapPredator = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\predator.jpg");
-            BitmapPrey = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\prey.jpg");
-            BitmapKillerWhale = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\images.jpg");
+            BitmapEmpty = new Bitmap(@"..\..\..\Resources\Images\empty.jpg");
+            BitmapObstacle = new Bitmap(@"..\..\..\Resources\Images\obstacle.png");
+            BitmapPredator = new Bitmap(@"..\..\..\Resources\Images\predator.jpg");
+            BitmapPrey = new Bitmap(@"..\..\..\Resources\Images\prey.jpg");
+            BitmapKillerWhale = new Bitmap(@"..\..\..\Resources\Images\images.jpg");
         }
 
         private ArrayOfOceanViewers()
@@ -139,7 +139,7 @@ namespace OceanWinForms.UI
 
             _numActiveOceans--;
 
-            if (_oceanViewers.Count == 0 && _numActiveOceans <= 0)
+            if (_oceanViewers.Count == 0 && _numActiveOceans < 0)
             {
                 MessageBox.Show("There are no oceans on the game field, so the form will be closed");
 
