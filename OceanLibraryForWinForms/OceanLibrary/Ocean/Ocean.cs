@@ -13,8 +13,8 @@ namespace OceanLibrary.Ocean
     public class Ocean : IOceanView, IOcean
     {
         #region Consts
-        private const int NumRowsDefault = 11; //25
-        private const int NumColumnsDefault = 23; //70
+        private const int NumRowsDefault = 8; //11
+        private const int NumColumnsDefault = 16; //23
         private const int NumIterationsDefault = 1000;
         private const int NumDirections = 8;
         #endregion
@@ -176,6 +176,7 @@ namespace OceanLibrary.Ocean
                 }
             }
         }
+        public int NumKillerWhales { get; set; }
         public int CurrentIteration { get; set; }
         #endregion
 
@@ -256,18 +257,6 @@ namespace OceanLibrary.Ocean
 
             switch (neighborType)
             {
-                case CellType.Prey:
-
-                    foreach (Coordinate coordinate in GetNeighbors(currentCoordinate))
-                    {
-                        if (this[coordinate]?.CellType == CellType.Prey)
-                        {
-                            neighbors[count++] = coordinate;
-                        }
-                    }
-
-                    break;
-
                 case CellType.Empty:
 
                     foreach (Coordinate coordinate in GetNeighbors(currentCoordinate))
@@ -277,6 +266,12 @@ namespace OceanLibrary.Ocean
                             neighbors[count++] = coordinate;
                         }
                     }
+
+                    break;
+
+                default:
+
+                    neighbors = GetNeighborsWithType(neighborType, currentCoordinate, out count);
 
                     break;
             }
@@ -289,16 +284,37 @@ namespace OceanLibrary.Ocean
             return neighbors[_randomNumberGenerator.Random.Next(0, count)];
         }
 
+        private Coordinate[] GetNeighborsWithType(CellType neighborType, Coordinate currentCoordinate, out int count)
+        {
+            count = 0;
+
+            Coordinate[] neighbors = new Coordinate[NumDirections];
+
+            foreach (Coordinate coordinate in GetNeighbors(currentCoordinate))
+            {
+                if (this[coordinate]?.CellType == neighborType)
+                {
+                    neighbors[count++] = coordinate;
+                }
+            }
+
+            return neighbors;
+        }
+
         private IEnumerable<Coordinate> GetNeighbors(Coordinate currentCoordinate)
         {
             yield return North(currentCoordinate);
             yield return South(currentCoordinate);
             yield return East(currentCoordinate);
             yield return West(currentCoordinate);
-            yield return NorthEast(currentCoordinate);
-            yield return NorthWest(currentCoordinate);
-            yield return SouthWest(currentCoordinate);
-            yield return SouthEast(currentCoordinate);
+
+            if (this[currentCoordinate] is KillerWhale)
+            {
+                yield return NorthEast(currentCoordinate);
+                yield return NorthWest(currentCoordinate);
+                yield return SouthWest(currentCoordinate);
+                yield return SouthEast(currentCoordinate);
+            }
         }
 
         private Coordinate East(Coordinate currentCoordinate)
@@ -407,6 +423,11 @@ namespace OceanLibrary.Ocean
             return GetNeighborWithType(CellType.Prey, currentCoordinate);
         }
 
+        public Coordinate GetNeighborPredatorCoord(Coordinate currentCoordinate)
+        {
+            return GetNeighborWithType(CellType.Predator, currentCoordinate);
+        }
+
         public void MoveFrom(Coordinate from, Coordinate to)
         {
             if (from != to)
@@ -428,7 +449,7 @@ namespace OceanLibrary.Ocean
             {
                 ICellVisitor cellVisitor = new CellVisitor();
 
-                if (NumPredators > 0 && NumPrey > 0)
+                if ((NumPredators > 0 || NumKillerWhales > 0) && NumPrey > 0)
                 {
                     for (int row = 0; row < NumRows; row++)
                     {

@@ -165,14 +165,21 @@ namespace OceanWinForms.UI
             ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfPredators.Text = String.Format("Predators: {0}", _ocean.NumPredators);
+                    _groupBoxOcean.LblNumberOfPredators.Text = String.Format("Sharks: {0}", _ocean.NumPredators);
                 },
               _groupBoxOcean.LblNumberOfPredators);
 
             ChangeControls(
+               () =>
+               {
+                   _groupBoxOcean.LblNumberKillerWhales.Text = String.Format("Killer whales: {0}", _ocean.NumKillerWhales);
+               },
+             _groupBoxOcean.LblNumberKillerWhales);
+
+            ChangeControls(
                 () =>
                 {
-                    _groupBoxOcean.LblNumberOfPrey.Text = String.Format("Prey: {0}", _ocean.NumPrey);
+                    _groupBoxOcean.LblNumberOfPrey.Text = String.Format("Fish: {0}", _ocean.NumPrey);
                 },
               _groupBoxOcean.LblNumberOfPrey);
         }
@@ -244,6 +251,10 @@ namespace OceanWinForms.UI
                 case OceanLibrary.Ocean.CellTypes.Enums.CellType.Prey:
 
                     return ArrayOfOceanViewers.BitmapPrey;
+
+                case OceanLibrary.Ocean.CellTypes.Enums.CellType.KillerWhale:
+
+                    return ArrayOfOceanViewers.BitmapKillerWhale;
 
                 default:
 

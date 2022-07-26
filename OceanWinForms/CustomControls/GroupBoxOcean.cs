@@ -8,11 +8,11 @@ namespace OceanWinForms.CustomControls
     {
         #region Consts
         private const int GroupBoxWidth = 900;
-        private const int GroupBoxHeight = 800;
+        private const int GroupBoxHeight = 850;
         private const int LabelWidth = 875;
         private const int LabelHeight = 40;
-        private const int PBWidth = 30;
-        private const int PBHeight = 30;
+        private const int PBWidth = 45;
+        private const int PBHeight = 45;
         private const int TableLayoutPanelWidth = 860;
         private const int TableLayoutPanelHeight = 333;
         private const int ButtonWidth = 125;
@@ -23,18 +23,20 @@ namespace OceanWinForms.CustomControls
         private const int LblObstaclesY = 82;
         private const int LblPredatorsX = 20;
         private const int LblPredatorsY = 130;
+        private const int LblKillerWhalesX = 20;
+        private const int LblKillerWhalesY = 178;
         private const int LblPreyX = 20;
-        private const int LblPreyY = 178;
+        private const int LblPreyY = 226;
         private const int LblGameStateX = 20;
-        private const int LblGameStateY = 680;
+        private const int LblGameStateY = 730;
         private const int TablePanelOceanX = 20;
-        private const int TablePanelOceanY = 240;
+        private const int TablePanelOceanY = 290;
         private const int ButtonDeleteX = 710;
-        private const int ButtonDeleteY = 740;
+        private const int ButtonDeleteY = 790;
         private const int ButtonPauseX = 390;
-        private const int ButtonPauseY = 740;
+        private const int ButtonPauseY = 790;
         private const int ButtonResumeX = 60;
-        private const int ButtonResumeY = 740;
+        private const int ButtonResumeY = 790;
         private float FontSizeForLabels = 13.8f;
         private float FontSizeForButtons = 12f;
         #endregion
@@ -51,6 +53,7 @@ namespace OceanWinForms.CustomControls
         public Label LblNumberOfIterations { get; private set; }
         public Label LblNumberOfObstacles { get; private set; }
         public Label LblNumberOfPredators { get; private set; }
+        public Label LblNumberKillerWhales { get; private set; }
         public Label LblNumberOfPrey { get; private set; }
         public Label LblGameState { get; private set; }
         public TableLayoutPanelDoubleBuff TableLayoutPaneltOcean { get; private set; }
@@ -172,10 +175,13 @@ namespace OceanWinForms.CustomControls
             LblNumberOfObstacles = CreateLabel("Obstacles: ", "lblNumberOfObstacles", indexNumber);
             AddControl(groupBox, LblNumberOfObstacles, new Point(LblObstaclesX, LblObstaclesY));
 
-            LblNumberOfPredators = CreateLabel("Predators: ", "lblNumberOfPredators", indexNumber);
+            LblNumberOfPredators = CreateLabel("Sharks: ", "lblNumberOfPredators", indexNumber);
             AddControl(groupBox, LblNumberOfPredators, new Point(LblPredatorsX, LblPredatorsY));
 
-            LblNumberOfPrey = CreateLabel("Prey: ", "lblNumberOfPrey", indexNumber);
+            LblNumberKillerWhales = CreateLabel("Killer whales: ", "lblNumberKillerWhales", indexNumber);
+            AddControl(groupBox, LblNumberKillerWhales, new Point(LblKillerWhalesX, LblKillerWhalesY));
+
+            LblNumberOfPrey = CreateLabel("Fish: ", "lblNumberOfPrey", indexNumber);
             AddControl(groupBox, LblNumberOfPrey, new Point(LblPreyX, LblPreyY));
 
             LblGameState = CreateLabel("", "labelGameState", indexNumber);

@@ -5,5 +5,6 @@
         int NumObstacles { get; set; }
         int NumPredators { get; set; }
         int NumPrey { get; set; }
+        int NumKillerWhales { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace OceanWinForms.UI
         public readonly static Bitmap BitmapObstacle;
         public readonly static Bitmap BitmapPredator;
         public readonly static Bitmap BitmapPrey;
+        public readonly static Bitmap BitmapKillerWhale;
         #endregion
 
         #region Fields
@@ -23,10 +24,11 @@ namespace OceanWinForms.UI
         #region Ctors
         static ArrayOfOceanViewers()
         {
-            BitmapEmpty = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\empty.jpg");
-            BitmapObstacle = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\obstacle.png");
-            BitmapPredator = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\predator.jpg");
-            BitmapPrey = new Bitmap(@"E:\SoftServe\Projects\OceanWinForms\OceanWinForms\Resources\Images\prey.jpg");
+            BitmapEmpty = new Bitmap(@"..\..\..\Resources\Images\empty.jpg");
+            BitmapObstacle = new Bitmap(@"..\..\..\Resources\Images\obstacle.png");
+            BitmapPredator = new Bitmap(@"..\..\..\Resources\Images\predator.jpg");
+            BitmapPrey = new Bitmap(@"..\..\..\Resources\Images\prey.jpg");
+            BitmapKillerWhale = new Bitmap(@"..\..\..\Resources\Images\images.jpg");
         }
 
         private ArrayOfOceanViewers()
@@ -41,15 +43,7 @@ namespace OceanWinForms.UI
 
         public ArrayOfOceanViewers(string length) : this()
         {
-            int number;
-
-            if (!Int32.TryParse(length, out number))
-            {
-                MessageBox.Show("Invalid input, so the it will be set its default value");
-                number = 1;
-            }
-
-            _oceanViewers = new List<IOceanLaunch>(number);
+            _oceanViewers = new List<IOceanLaunch>(Validate(length));
         }
 
         public ArrayOfOceanViewers(List<IOceanLaunch> oceanViewers) : this()
@@ -118,6 +112,19 @@ namespace OceanWinForms.UI
 
             return successTop && successLeft;
         }
+
+        private int Validate(string str)
+        {
+            int number;
+
+            if (!Int32.TryParse(str, out number))
+            {
+                MessageBox.Show("Invalid input, so the it will be set its default value");
+                number = 1;
+            }
+
+            return number;
+        }
         #endregion
 
         #region Event handlers
@@ -132,7 +139,7 @@ namespace OceanWinForms.UI
 
             _numActiveOceans--;
 
-            if (_oceanViewers.Count == 0 && _numActiveOceans <= 0)
+            if (_oceanViewers.Count == 0 && _numActiveOceans < 0)
             {
                 MessageBox.Show("There are no oceans on the game field, so the form will be closed");
 

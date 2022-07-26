@@ -5,6 +5,7 @@
         Empty,
         Prey,
         Obstacle,
-        Predator
+        Predator,
+        KillerWhale
     }
 }
